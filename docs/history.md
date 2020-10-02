@@ -1,5 +1,8 @@
 # Project History
 
+### 10/1/2020
+Project acquired by Foretold Software
+
 ### 9/8/2015
 First NuGet package release
 
