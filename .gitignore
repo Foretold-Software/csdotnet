@@ -1,0 +1,7 @@
+﻿*.user
+*.suo
+*.g.cs
+.vs/
+src/**/[Bb]in/
+src/**/[Oo]bj/
+packages/

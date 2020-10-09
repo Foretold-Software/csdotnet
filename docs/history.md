@@ -1,7 +1,8 @@
 # Project History
 
 ### 10/8/2020
-Foretold-owned git repo created
+Foretold-owned git repo created.\
+Project restructured for FS git csproj template, and new repo populated.
 
 ### 10/1/2020
 Project acquired by Foretold Software
