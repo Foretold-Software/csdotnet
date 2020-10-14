@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<NoWarn>1591</NoWarn>
+		<TargetFrameworkVersions>Default</TargetFrameworkVersions>
+
+		<NextHigherDirectoryBuildProps>$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))</NextHigherDirectoryBuildProps>
+	</PropertyGroup>
+
+	<Import Project="$(NextHigherDirectoryBuildProps)"
+			Condition=" '$(NextHigherDirectoryBuildProps)' != '' AND Exists('$(NextHigherDirectoryBuildProps)') " />
+
+</Project>

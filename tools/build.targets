@@ -7,4 +7,6 @@
 		<DocumentationFile>$(OutputPath)$(TargetName).xml</DocumentationFile>
 	</PropertyGroup>
 
+	<Import Project="$(MSBuildThisFileDirectory)build.multi.targets" Condition=" '$(TargetFrameworkVersions)' != '' " />
+
 </Project>

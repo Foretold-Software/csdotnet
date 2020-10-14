@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<!-- These properties will apply whenever the project targets multiple framework versions. -->
+	<PropertyGroup>
+		<TargetFrameworkVersions Condition=" '$(TargetFrameworkVersions)' == 'Default' ">$(DefaultFrameworkVersions)</TargetFrameworkVersions>
+		<NetFxPreprocessorVar>DOTNET$([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v|\.', '').ToUpper())</NetFxPreprocessorVar>
+		<DefineConstants>$(NetFxPreprocessorVar);$(DefineConstants)</DefineConstants>
+	</PropertyGroup>
+
+
+	<!-- These properties will apply when the project targets multiple framework versions
+		 and the current build will re-launch itself for each individual target framework version. -->
+	<PropertyGroup Condition=" '$(AssignedTargetFrameworkVersion)' == '' ">
+		<CleanDependsOn  >BuildSpecificFrameworkVersion-Clean</CleanDependsOn>
+		<BuildDependsOn  >BuildSpecificFrameworkVersion-Build</BuildDependsOn>
+		<RebuildDependsOn>BuildSpecificFrameworkVersion-Rebuild</RebuildDependsOn>
+	</PropertyGroup>
+
+
+	<!-- These properties will apply when the project targets multiple framework versions
+		 and the current build is a re-launch which targets an individual framework version. -->
+	<PropertyGroup Condition=" '$(AssignedTargetFrameworkVersion)' != '' ">
+		<BuildDependsOn>OutputFrameworkVersionInfo;$(BuildDependsOn)</BuildDependsOn>
+	</PropertyGroup>
+
+
+	<Target Name="BuildSpecificFrameworkVersions-Prepare">
+		<ItemGroup>
+			<TargetFrameworkVersions Include="$(TargetFrameworkVersions)" />
+		</ItemGroup>
+
+		<Message Text="Re-launching build with assigned TargetFrameworkVersion values:" />
+		<Message Text="    %(TargetFrameworkVersions.Identity)" />
+	</Target>
+
+
+	<Target Name="BuildSpecificFrameworkVersion-Clean" DependsOnTargets="BuildSpecificFrameworkVersions-Prepare">
+		<MSBuild Projects="$(MSBuildProjectFullPath)"
+				 Targets="Clean"
+				 Properties="Configuration=$(Configuration);Platform=$(Platform);AssignedTargetFrameworkVersion=%(TargetFrameworkVersions.Identity)" />
+	</Target>
+
+
+	<Target Name="BuildSpecificFrameworkVersion-Build" DependsOnTargets="BuildSpecificFrameworkVersions-Prepare">
+		<MSBuild Projects="$(MSBuildProjectFullPath)"
+				 Targets="Build"
+				 Properties="Configuration=$(Configuration);Platform=$(Platform);AssignedTargetFrameworkVersion=%(TargetFrameworkVersions.Identity)" />
+	</Target>
+
+
+	<Target Name="BuildSpecificFrameworkVersion-Rebuild" DependsOnTargets="BuildSpecificFrameworkVersions-Prepare">
+		<MSBuild Projects="$(MSBuildProjectFullPath)"
+				 Targets="Rebuild"
+				 Properties="Configuration=$(Configuration);Platform=$(Platform);AssignedTargetFrameworkVersion=%(TargetFrameworkVersions.Identity)" />
+	</Target>
+
+
+	<Target Name="OutputFrameworkVersionInfo">
+		<Message Text="Assigned .Net Framework version: $(AssignedTargetFrameworkVersion)" />
+		<Message Text="Target .Net Framework version:   $(TargetFrameworkVersion)" />
+		<Message Text="Target .Net Framework profile:   $(TargetFrameworkProfile)" Condition=" '$(TargetFrameworkProfile)' != '' " />
+		<Message Text="The following preprocessor variable is defined for this build, to indicate .Net version: $(NetFxPreprocessorVar)" />
+	</Target>
+
+</Project>

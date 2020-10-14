@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<!-- Support extends through 5-10-2022 (and likely longer) -->
+		<SupportedFrameworkVersions>v4.8</SupportedFrameworkVersions>
+		<!-- Support extends through 5-11-2021 -->
+		<SupportedFrameworkVersions>v4.7.2;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
+		<!-- Support extends through 10-13-2020 -->
+		<SupportedFrameworkVersions>v4.7.1;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
+		<!-- Support extends through 10-13-2026 -->
+		<SupportedFrameworkVersions>v4.6.2;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
+		<!-- Support extends through 10-14-2025 -->
+		<SupportedFrameworkVersions>v4.6;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
+		<!-- Support extends through 10-10-2028 -->
+		<SupportedFrameworkVersions>v3.5-client;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
+
+		<DefaultFrameworkVersions>$(SupportedFrameworkVersions)</DefaultFrameworkVersions>
+	</PropertyGroup>
+
+
+	<!-- These properties will apply when the project targets multiple framework versions
+		 and the current build is a re-launch which targets an individual framework version. -->
+	<PropertyGroup Condition=" '$(AssignedTargetFrameworkVersion)' != '' ">
+
+		<TargetFrameworkVersion>$(AssignedTargetFrameworkVersion)</TargetFrameworkVersion>
+		<TargetFrameworkProfile></TargetFrameworkProfile>
+
+		<!-- If the client profile is indicated, then set that value and parse the .Net Framework version. -->
+		<TargetFrameworkVersion Condition=" $(AssignedTargetFrameworkVersion.EndsWith('-client')) ">$(AssignedTargetFrameworkVersion.Substring(0, $(AssignedTargetFrameworkVersion.IndexOf('-'))))</TargetFrameworkVersion>
+		<TargetFrameworkProfile Condition=" $(AssignedTargetFrameworkVersion.EndsWith('-client')) ">Client</TargetFrameworkProfile>
+
+		<OutputPath            >bin\$(Configuration)\$(AssignedTargetFrameworkVersion)\</OutputPath>
+		<IntermediateOutputPath>obj\$(Configuration)\$(AssignedTargetFrameworkVersion)\</IntermediateOutputPath>
+
+	</PropertyGroup>
+
+</Project>

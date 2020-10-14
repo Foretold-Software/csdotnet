@@ -6,14 +6,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>CS.Net</RootNamespace>
     <AssemblyName>CS.Net</AssemblyName>
-    <NoWarn>1591</NoWarn>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <DefineConstants>$(DefineConstants);DOTNET35</DefineConstants>
-    <IntermediateOutputPath>$(IntermediateOutputPath)$(TargetFrameworkVersion)\</IntermediateOutputPath>
-    <OutputPath>$(OutputPath)$(TargetFrameworkVersion)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
   </PropertyGroup>
