@@ -6,7 +6,7 @@ namespace System
 	{
 		public static IntPtr Offset(IntPtr ptr, int offset)
 		{
-#if DOTNET35
+#if NET35
 			// .Net 3.5
 			//TODO IMPORTANT ASAP: Test this somehow to make sure the values are correct.
 			if (IntPtr.Size == 8)
@@ -17,7 +17,7 @@ namespace System
 			{
 				return new IntPtr(ptr.ToInt32() + offset);
 			}
-#elif DOTNET45
+#else
 		// .Net 4+
 		return ptr + offset;
 #endif

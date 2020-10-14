@@ -14,9 +14,9 @@ namespace System
 		/// </returns>
 		public static bool IsNullOrWhiteSpace(string value)
 		{
-#if DOTNET35
+#if NET35
 			return value == null || value.Trim().Length == 0;
-#elif DOTNET45
+#else
 			return string.IsNullOrWhiteSpace(value);
 #endif
 		}

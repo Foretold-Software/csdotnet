@@ -73,9 +73,9 @@ namespace System.Collections.Generic
 		/// </summary>
 		internal static string ToString<T>(SerializableList<T> list) where T : IConvertible
 		{
-#if DOTNET35
+#if NET35
 			throw new NotImplementedException(); //TODO: This in .Net 3.5
-#elif DOTNET45
+#else
 			return string.Join(delimiter, list);
 #endif
 		}

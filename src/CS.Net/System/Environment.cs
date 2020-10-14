@@ -8,10 +8,10 @@ namespace System
 		{
 			get
 			{
-#if DOTNET35
+#if NET35
 				// .Net 3.5
 				return IntPtr.Size == 8;
-#elif DOTNET45
+#else
 				// .Net 4+
 				return Environment.Is64BitOperatingSystem;
 #endif

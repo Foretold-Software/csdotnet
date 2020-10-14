@@ -52,7 +52,7 @@ namespace System.IO
 		/// </exception>
 		public static string Combine(params string[] paths)
 		{
-#if DOTNET35
+#if NET35
 			var path = string.Empty;
 
 			for (int i = 0; i < paths.Length; i++)
@@ -68,7 +68,7 @@ namespace System.IO
 			}
 
 			return path;
-#elif (DOTNET40 || DOTNET45)
+#else
 			return Path.Combine(paths);
 #endif
 		}
@@ -79,10 +79,10 @@ namespace System.IO
 		/// <returns>The path to windir.</returns>
 		public static string GetWindowsDirectory()
 		{
-#if DOTNET35
+#if NET35
 			// .Net 3.5
 			return Environment.GetEnvironmentVariable("windir", EnvironmentVariableTarget.Machine);
-#elif (DOTNET40 || DOTNET45)
+#else
 			// .Net 4+
 			return Environment.GetFolderPath(Environment.SpecialFolder.Windows);
 #endif

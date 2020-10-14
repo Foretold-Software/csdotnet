@@ -33,7 +33,7 @@ namespace System
 		/// <returns>Return true if the conversion was successful, otherwise false.</returns>
 		public static bool TryParse<T>(string value, bool ignoreCase, out T result) where T : struct
 		{
-#if DOTNET35 // .Net 3.5
+#if NET35 // .Net 3.5
 			try
 			{
 				decimal decimalValue;
@@ -74,7 +74,7 @@ namespace System
 			result = default(T);
 			return false;
 
-#elif DOTNET45 // .Net 4+
+#else // .Net 4+
 			return Enum.TryParse<T>(value, out result);
 #endif
 		}

@@ -6,10 +6,10 @@ namespace System
 	{
 		public static Guid Parse(string value)
 		{
-#if DOTNET35
+#if NET35
 			return new Guid(value);
-#elif DOTNET45
-		return Guid.Parse(value);
+#else
+			return Guid.Parse(value);
 #endif
 		}
 	}

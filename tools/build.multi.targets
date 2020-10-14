@@ -5,7 +5,7 @@
 	<!-- These properties will apply whenever the project targets multiple framework versions. -->
 	<PropertyGroup>
 		<TargetFrameworkVersions Condition=" '$(TargetFrameworkVersions)' == 'Default' ">$(DefaultFrameworkVersions)</TargetFrameworkVersions>
-		<NetFxPreprocessorVar>DOTNET$([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v|\.', '').ToUpper())</NetFxPreprocessorVar>
+		<NetFxPreprocessorVar>NET$([System.Text.RegularExpressions.Regex]::Replace($(TargetFrameworkVersion), 'v|\.', '').ToUpper())</NetFxPreprocessorVar>
 		<DefineConstants>$(NetFxPreprocessorVar);$(DefineConstants)</DefineConstants>
 	</PropertyGroup>
 
