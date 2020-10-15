@@ -7,8 +7,6 @@
 		<SupportedFrameworkVersions>v4.8</SupportedFrameworkVersions>
 		<!-- Support extends through 5-11-2021 -->
 		<SupportedFrameworkVersions>v4.7.2;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
-		<!-- Support extends through 10-13-2020 -->
-		<SupportedFrameworkVersions>v4.7.1;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
 		<!-- Support extends through 10-13-2026 -->
 		<SupportedFrameworkVersions>v4.6.2;$(SupportedFrameworkVersions)</SupportedFrameworkVersions>
 		<!-- Support extends through 10-14-2025 -->
