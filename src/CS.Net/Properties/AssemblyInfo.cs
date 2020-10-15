@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("91c7e35b-e4a7-43c3-aa26-feca9f1e2f50")]
+[assembly: Guid("91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50")]
 
 [assembly: InternalsVisibleTo("CS.Net.Tests")]
 [assembly: InternalsVisibleTo("CS.Net.Explorables")]

@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("CS.Net.Sample")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("CS.Net sample application")]
+[assembly: AssemblyDescription("An sample application use-case testing the CS.Net project.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CS.Net.Sample")]
+[assembly: AssemblyCompany("Foretold Software, LLC")]
+[assembly: AssemblyProduct("CS.Net sample application")]
 [assembly: AssemblyCopyright("Copyright © Foretold Software, LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fb70c1d7-b921-44dc-b1d1-35688df520b0")]
+[assembly: Guid("FB70C1D7-B921-44DC-B1D1-35688DF520B0")]
 
 // Version information for an assembly consists of the following four values:
 //
