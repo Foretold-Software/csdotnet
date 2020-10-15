@@ -15,7 +15,7 @@
 
 	<!-- Configuration-specific properties -->
 	<PropertyGroup>
-		<DefineConstants>TRACE</DefineConstants>
+		<DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
 		<ErrorReport>prompt</ErrorReport>
 		<WarningLevel>4</WarningLevel>
 		<PlatformTarget>$(Platform)</PlatformTarget>

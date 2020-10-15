@@ -6,6 +6,8 @@
 		<NoWarn>1591</NoWarn>
 		<TargetFrameworkVersions>Default</TargetFrameworkVersions>
 
+		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v3.5-client</AssignedTargetFrameworkVersion>
+
 		<NextHigherDirectoryBuildProps>$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))</NextHigherDirectoryBuildProps>
 	</PropertyGroup>
 
