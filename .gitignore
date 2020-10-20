@@ -251,6 +251,12 @@ UpgradeLog*.htm
 ServiceFabricBackup/
 *.rptproj.bak
 
+# Other backup files/folder that begin or end with "ignore"
+ignore.*
+ignore.*/
+*.ignore
+*.ignore/
+
 # SQL Server files
 *.mdf
 *.ldf
