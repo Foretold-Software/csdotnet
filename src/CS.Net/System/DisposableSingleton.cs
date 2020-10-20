@@ -52,7 +52,7 @@ namespace System
 		/// <summary>
 		/// Performs the functions normally done by
 		/// the <see cref="IDisposable.Dispose"/> method. This method
-		/// is called when the reference count for the <see cref="T"/> type
+		/// is called when the reference count for the <typeparamref name="T"/> type
 		/// reaches zero in the <see cref="DisposableSingletonManager"/>
 		/// class's disposable singleton management functions.
 		/// </summary>

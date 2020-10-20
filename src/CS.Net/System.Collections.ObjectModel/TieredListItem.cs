@@ -215,7 +215,7 @@ namespace System.Collections.ObjectModel
 
 		#region Operators
 		/// <summary>
-		/// Converts a <see cref="TieredListItem{T}"/> to a <see cref="T"/> by
+		/// Converts a <see cref="TieredListItem{T}"/> to a <typeparamref name="T"/> by
 		/// returning the value of the <see cref="Item"/> property.
 		/// </summary>
 		/// <param name="tieredListItem">
