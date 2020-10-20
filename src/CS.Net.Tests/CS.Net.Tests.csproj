@@ -47,6 +47,7 @@
     <Compile Include="System\EnumTest.cs" />
     <Compile Include="TypesForTesting\System\Singleton.cs" />
     <Compile Include="TypesForTesting\System\ValueString.cs" />
+    <Compile Include="Microsoft.VisualStudio.TestTools.UnitTesting\Assert.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
