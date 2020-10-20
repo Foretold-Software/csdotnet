@@ -24,9 +24,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CS.Net\CS.Net.net35.csproj" Condition=" '$(Configuration)' == 'Debug' ">
+    <ProjectReference Include="..\CS.Net\CS.Net.csproj" Condition=" '$(Configuration)' == 'Debug' ">
       <Project>{91c7e35b-e4a7-43c3-aa26-feca9f1e2f50}</Project>
-      <Name>CS.Net.net35</Name>
+      <Name>CS.Net</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30523.141
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Net.net35", "CS.Net\CS.Net.net35.csproj", "{91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Net", "CS.Net\CS.Net.csproj", "{91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CS.Net.Tests", "CS.Net.Tests\CS.Net.Tests.csproj", "{5A581BBC-D166-4768-9FD0-55C09B32DE96}"
 EndProject
