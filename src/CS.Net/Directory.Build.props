@@ -3,7 +3,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<NoWarn>1591</NoWarn>
 		<TargetFrameworkVersions>Default</TargetFrameworkVersions>
 
 		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v3.5-client</AssignedTargetFrameworkVersion>

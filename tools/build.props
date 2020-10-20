@@ -10,6 +10,7 @@
 		<AppDesignerFolder>Properties</AppDesignerFolder>
 		<FileAlignment>512</FileAlignment>
 		<Deterministic>true</Deterministic>
+		<NoWarn>1591</NoWarn>
 	</PropertyGroup>
 
 
