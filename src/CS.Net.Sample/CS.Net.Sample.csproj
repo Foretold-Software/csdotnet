@@ -13,10 +13,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CS.Net" Condition=" '$(Configuration)' == 'Release' ">
-      <HintPath>..\packages\CS.Net.1.0.5\lib\net35-client\CS.Net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -26,6 +22,8 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\CS.Net\CS.Net.net35.csproj" Condition=" '$(Configuration)' == 'Debug' ">
       <Project>{91c7e35b-e4a7-43c3-aa26-feca9f1e2f50}</Project>
       <Name>CS.Net.net35</Name>
@@ -37,13 +35,15 @@
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <Page Include="Views\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CS.Net" Condition=" '$(Configuration)' == 'Release' ">
+      <Version>1.0.5</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
