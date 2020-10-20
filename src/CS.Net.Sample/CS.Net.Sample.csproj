@@ -24,7 +24,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CS.Net\CS.Net.csproj" Condition=" '$(Configuration)' == 'Debug' ">
+    <ProjectReference Include="..\CS.Net\CS.Net.csproj">
       <Project>{91c7e35b-e4a7-43c3-aa26-feca9f1e2f50}</Project>
       <Name>CS.Net</Name>
     </ProjectReference>
@@ -39,11 +39,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="CS.Net" Condition=" '$(Configuration)' == 'Release' ">
-      <Version>1.0.5</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
