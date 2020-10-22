@@ -2,8 +2,17 @@
 
 namespace System
 {
+	/// <summary>
+	/// A class containing extension methods for objects of type <see cref="System.String"/>.
+	/// </summary>
 	public static class _String
 	{
+		/// <summary>
+		/// The array of strings, in the proper order, to use for the SplitLines methods.
+		/// </summary>
+		private static string[] SplitLinesSeparator
+			=> new string[] { "\r\n", "\n\r", "\r", "\n" };
+
 		/// <summary>
 		/// Determines whether the given string is null, empty, or contains only whitespace.
 		/// </summary>
@@ -109,8 +118,6 @@ namespace System
 			return string.Format("\"{0}\"", value ?? string.Empty);
 		}
 
-
-
 		[Obsolete("Remove this method from this project.")]
 		public static string Format(string format, params object[] args)
 		{
@@ -139,14 +146,25 @@ namespace System
 			return result;
 		}
 
+		/// <summary>
+		/// Splits a string based on line break characters, including combined line terminators, such as \r\n.
+		/// </summary>
+		/// <param name="value">The string to split.</param>
+		/// <returns>Returns an array of strings, split by line terminators.</returns>
 		public static string[] SplitLines(this string value)
 		{
-			return value.Split(new char[] { '\n', '\r' });
+			return value.Split(SplitLinesSeparator, StringSplitOptions.None);
 		}
 
+		/// <summary>
+		/// Splits a string based on line break characters, including combined line terminators, such as \r\n.
+		/// </summary>
+		/// <param name="value">The string to split.</param>
+		/// <param name="options">String split options to use during the split.</param>
+		/// <returns>Returns an array of strings, split by line terminators.</returns>
 		public static string[] SplitLines(this string value, StringSplitOptions options)
 		{
-			return value.Split(new char[] { '\n', '\r' }, options);
+			return value.Split(SplitLinesSeparator, options);
 		}
 	}
 }
