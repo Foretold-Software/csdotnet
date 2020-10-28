@@ -6,7 +6,6 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>CS.Net.Sample</RootNamespace>
     <AssemblyName>CS.Net.Sample</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
   </PropertyGroup>
