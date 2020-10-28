@@ -1,7 +1,13 @@
-# .NET Desktop
-# Build and run tests for .NET Desktop or Windows classic desktop solutions.
-# Add steps that publish symbols, save build artifacts, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/apps/windows/dot-net
+# Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information.
+
+##################################################################################
+#   Filename: azure-pipelines.yml
+#
+#   Description:
+#       This file contains elements necessary to build, test,
+#       and deploy the CS.Net project.
+#
+##################################################################################
 
 trigger:
 - master
@@ -10,24 +16,58 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
+  versionMajorMinor: '0.1.'
+  productVersion:  $[format('{0}{1}', variables['versionMajorMinor'], counter(variables['versionMajorMinor'], 100))]
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: NuGetToolInstaller@1
+name: $(productVersion)
 
-- task: NuGetCommand@2
-  inputs:
-    restoreSolution: '$(solution)'
+stages:
+- stage: build
+  displayName: Build
+  jobs:
 
-- task: VSBuild@1
-  inputs:
-    solution: '$(solution)'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  - job: build
+    displayName: Build
+    steps:
 
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    - task: NuGetToolInstaller@1
+      displayName: Nuget - Install tool
+
+    - task: NuGetCommand@2
+      displayName: Nuget - Restore
+      inputs:
+        restoreSolution: '$(solution)'
+
+    - task: VSBuild@1
+      displayName: Build solution
+      inputs:
+        solution: '$(solution)'
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: VSTest@2
+      displayName: Run unit tests
+      condition: false
+      inputs:
+        platform: '$(buildPlatform)'
+        configuration: '$(buildConfiguration)'
+
+    - task: NuGetCommand@2
+      name: PackNugetPackage
+      displayName: Nuget - Pack
+      inputs:
+        command: pack
+        packagesToPack: 'src/CS.Net/CS.Net.csproj'
+        versioningScheme: byBuildNumber
+
+    - task: NuGetCommand@2
+      name: PushNugetPackage
+      displayName: Nuget - Push to Feed
+      inputs:
+        command: push
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: internal
+        publishVstsFeed: '60593458-e441-4df1-950e-1608e9efe6e8/834a5c7f-61e8-4154-8d99-0c0f0822d65e'
