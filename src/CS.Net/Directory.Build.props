@@ -6,10 +6,13 @@
 		<TargetFrameworkVersions>Default</TargetFrameworkVersions>
 
 		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v3.5-client</AssignedTargetFrameworkVersion>
-
-		<NextHigherDirectoryBuildProps>$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))</NextHigherDirectoryBuildProps>
 	</PropertyGroup>
 
+
+	<!-- Import the next higher Directory.Build.props file. -->
+	<PropertyGroup>
+		<NextHigherDirectoryBuildProps>$([MSBuild]::GetPathOfFileAbove(Directory.Build.props, $(MSBuildThisFileDirectory)..))</NextHigherDirectoryBuildProps>
+	</PropertyGroup>
 	<Import Project="$(NextHigherDirectoryBuildProps)"
 			Condition=" '$(NextHigherDirectoryBuildProps)' != '' AND Exists('$(NextHigherDirectoryBuildProps)') " />
 
