@@ -16,6 +16,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -26,6 +27,7 @@
     <ProjectReference Include="..\CS.Net\CS.Net.csproj">
       <Project>{91c7e35b-e4a7-43c3-aa26-feca9f1e2f50}</Project>
       <Name>CS.Net</Name>
+      <AdditionalProperties>AssignedTargetFrameworkVersion=v3.5-client</AdditionalProperties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

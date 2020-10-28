@@ -24,6 +24,7 @@
     <ProjectReference Include="..\CS.Net\CS.Net.csproj">
       <Project>{91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50}</Project>
       <Name>CS.Net</Name>
+      <AdditionalProperties>AssignedTargetFrameworkVersion=v3.5-client</AdditionalProperties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
