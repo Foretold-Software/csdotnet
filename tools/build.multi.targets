@@ -10,6 +10,14 @@
 	</PropertyGroup>
 
 
+	<!-- Assign TargetFrameworks property for nuget package creation -->
+	<PropertyGroup Condition=" '$(AssignedTargetFrameworkVersion)' == '' ">
+		<PackageOutputPath>$(OutputPath)nuget-package\</PackageOutputPath>
+		<GenerateNuspecDependsOn>GetPackageLibFiles;$(GenerateNuspecDependsOn)</GenerateNuspecDependsOn>
+		<TargetFrameworks Condition=" '$(TargetFrameworks)' == '' AND '$(TargetFrameworkVersions)' != '' ">$(TargetFrameworkVersions.Replace('.', '').Replace('v', 'net'))</TargetFrameworks>
+	</PropertyGroup>
+
+
 	<!-- These properties will apply when the project targets multiple framework versions
 		 and the current build will re-launch itself for each individual target framework version. -->
 	<PropertyGroup Condition=" '$(AssignedTargetFrameworkVersion)' == '' ">
@@ -62,6 +70,22 @@
 		<Message Text="Target .Net Framework version:   $(TargetFrameworkVersion)" />
 		<Message Text="Target .Net Framework profile:   $(TargetFrameworkProfile)" Condition=" '$(TargetFrameworkProfile)' != '' " />
 		<Message Text="The following preprocessor variable is defined for this build, to indicate .Net version: $(NetFxPreprocessorVar)" />
+	</Target>
+
+
+	<Target Name="GetPackageLibFiles">
+		<ItemGroup>
+			<TargetFrameworks Include="$(TargetFrameworks)" />
+
+			<PotentialPackageFiles Include="bin\$(Configuration)\%(TargetFrameworks.Identity)\$(TargetName)$(TargetExt)">
+				<TargetFramework>%(TargetFrameworks.Identity)</TargetFramework>
+			</PotentialPackageFiles>
+			<PotentialPackageFiles Include="bin\$(Configuration)\%(TargetFrameworks.Identity)\$(TargetName).xml">
+				<TargetFramework>%(TargetFrameworks.Identity)</TargetFramework>
+			</PotentialPackageFiles>
+
+			<None Include="%(PotentialPackageFiles.Identity)" Pack="true" PackagePath="lib\%(PotentialPackageFiles.TargetFramework)" Condition=" exists('%(PotentialPackageFiles.Identity)') " />
+		</ItemGroup>
 	</Target>
 
 </Project>

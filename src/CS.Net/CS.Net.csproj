@@ -19,6 +19,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.7.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Microsoft.Win32\Extensions.cs" />
     <Compile Include="System.Collections.Generic\ICollection.cs" />
     <Compile Include="System.Collections.Generic\ITieredList.cs" />

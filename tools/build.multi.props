@@ -29,8 +29,10 @@
 		<TargetFrameworkVersion Condition=" $(AssignedTargetFrameworkVersion.EndsWith('-client')) ">$(AssignedTargetFrameworkVersion.Substring(0, $(AssignedTargetFrameworkVersion.IndexOf('-'))))</TargetFrameworkVersion>
 		<TargetFrameworkProfile Condition=" $(AssignedTargetFrameworkVersion.EndsWith('-client')) ">Client</TargetFrameworkProfile>
 
-		<OutputPath            >bin\$(Configuration)\$(AssignedTargetFrameworkVersion)\</OutputPath>
-		<IntermediateOutputPath>obj\$(Configuration)\$(AssignedTargetFrameworkVersion)\</IntermediateOutputPath>
+		<OutputDirectoryName>net$([System.Text.RegularExpressions.Regex]::Replace($(AssignedTargetFrameworkVersion), 'v|\.', ''))</OutputDirectoryName>
+
+		<OutputPath            >bin\$(Configuration)\$(OutputDirectoryName)\</OutputPath>
+		<IntermediateOutputPath>obj\$(Configuration)\$(OutputDirectoryName)\</IntermediateOutputPath>
 
 	</PropertyGroup>
 

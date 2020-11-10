@@ -3,10 +3,31 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<TargetFrameworkVersions>Default</TargetFrameworkVersions>
+		<TargetFrameworkVersions>v3.5-client;v4.6;v4.6.2;v4.7.2;v4.8</TargetFrameworkVersions>
+		<TargetFrameworks>net35-client;net46;net462;net472;net48</TargetFrameworks>
 
-		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v3.5-client</AssignedTargetFrameworkVersion>
+		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v4.7.2</AssignedTargetFrameworkVersion>
 	</PropertyGroup>
+
+
+	<PropertyGroup>
+		<PackageId>CS.Net</PackageId>
+		<Title>CS.Net</Title>
+		<Version>1.1.1120</Version>
+		<Authors>Foretold-Software</Authors>
+		<Company>Foretold Software, LLC</Company>
+		<Copyright>Copyright © Foretold Software, LLC. All rights reserved.</Copyright>
+		<Description>A .Net library for code simplification.</Description>
+		<PackageTags>.Net Framework;Tools;Log;Logging;Shortcuts;Code Simplification;Simplify;Observable Dictionary;ObservableDictionary;Recursive Collection;RecursiveCollection;Disposable;Singleton;Icon</PackageTags>
+		<PackageProjectUrl>https://github.com/Foretold-Software/csdotnet</PackageProjectUrl>
+
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<PackageLicenseFile>license.md</PackageLicenseFile>
+		<LicenseFilePath>$([MSBuild]::GetPathOfFileAbove($(PackageLicenseFile), $(MSBuildThisFileDirectory)))</LicenseFilePath>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="$(LicenseFilePath)" Pack="true" PackagePath=""/>
+	</ItemGroup>
 
 
 	<!-- Import the next higher Directory.Build.props file. -->
