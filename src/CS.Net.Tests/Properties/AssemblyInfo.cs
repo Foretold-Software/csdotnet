@@ -5,15 +5,15 @@ using System.Runtime.InteropServices;
 
 // System.Reflection
 [assembly: AssemblyTitle("CS.Net unit tests")]
-[assembly: AssemblyDescription("An library for unit testing the CS.Net project.")]
+[assembly: AssemblyDescription("A library for unit testing the CS.Net project.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Foretold Software, LLC")]
 [assembly: AssemblyProduct("CS.Net unit tests")]
 [assembly: AssemblyCopyright("Copyright © Foretold Software, LLC")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("1.0.0")]
+[assembly: AssemblyFileVersion("1.0.0")]
 
 // System.Runtime.InteropServices
 [assembly: ComVisible(false)]
