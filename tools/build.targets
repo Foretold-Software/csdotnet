@@ -10,4 +10,7 @@
 
 	<Import Project="$(MSBuildThisFileDirectory)build.multi.targets" Condition=" '$(TargetFrameworkVersions)' != '' " />
 
+	<!-- Automatic versioning -->
+	<Import Project="$(MSBuildThisFileDirectory)versioning.targets" />
+
 </Project>
