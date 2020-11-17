@@ -1,98 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
+﻿<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <ProjectGuid>{91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>CS.Net</RootNamespace>
-    <AssemblyName>CS.Net</AssemblyName>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="WindowsBase" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="NuGet.Build.Tasks.Pack" Version="5.7.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Microsoft.Win32\Extensions.cs" />
-    <Compile Include="System.Collections.Generic\ICollection.cs" />
-    <Compile Include="System.Collections.Generic\ITieredList.cs" />
-    <Compile Include="System.Collections.Generic\ITieredListItem.cs" />
-    <Compile Include="System.Collections.ObjectModel\DistinctCollection.cs" />
-    <Compile Include="System.Collections.ObjectModel\ListContainer.cs" />
-    <Compile Include="System.Collections.ObjectModel\ObservableRecursiveCollection.cs" />
-    <Compile Include="System.Collections.ObjectModel\TieredList.cs" />
-    <Compile Include="System.Collections.ObjectModel\TieredListItem.cs" />
-    <Compile Include="System.Collections.ObjectModel\ObservableDictionary.cs" />
-    <Compile Include="System.Collections.ObjectModel\RecursiveCollection.cs" />
-    <Compile Include="System.Collections\ITieredList.cs" />
-    <Compile Include="System.Collections\ITieredListItem.cs" />
-    <Compile Include="System.ComponentModel\NotifyPropertyChanged.cs" />
-    <Compile Include="System.Diagnostics\Process.cs" />
-    <Compile Include="System.Diagnostics\Debugger.cs" />
-    <Compile Include="System.Drawing\Extensions.cs" />
-    <Compile Include="System.Drawing\StockIcon.cs" />
-    <Compile Include="System.Globalization\CultureInfo.cs" />
-    <Compile Include="System.IO\WorkingDirectory.cs" />
-    <Compile Include="System.IO\File.cs" />
-    <Compile Include="System.IO\Folder.cs" />
-    <Compile Include="System.IO\Path.cs" />
-    <Compile Include="System.IO\TempFolder.cs" />
-    <Compile Include="System.ComponentModel\Extensions.cs" />
-    <Compile Include="System.Windows.Controls\BooleanToVisibilityConverterInverse.cs" />
-    <Compile Include="System.Windows.Input\AllCommand.cs" />
-    <Compile Include="System.Windows.Input\ParameterizedAllCommand.cs" />
-    <Compile Include="System.Windows.Input\ParameterizedMultiCommand.cs" />
-    <Compile Include="System.Windows.Input\ParameterizedAnyCommand.cs" />
-    <Compile Include="System.Windows.Input\AnyCommand.cs" />
-    <Compile Include="System.Windows.Input\CommandBase.cs" />
-    <Compile Include="System.Windows.Input\CommandAction.cs" />
-    <Compile Include="System.Windows.Input\MultiCommand.cs" />
-    <Compile Include="System.Windows.Input\ParameterizedCommandAction.cs" />
-    <Compile Include="System.Windows.Threading\Extensions.cs" />
-    <Compile Include="System.Windows\CultureInfoToFlowDirectionConverter.cs" />
-    <Compile Include="System.Windows\DraggableWindow.cs" />
-    <Compile Include="System.Windows\CollectionToVisibilityConverter.cs" />
-    <Compile Include="System.Windows\NotifyPropertyChangedDependencyObject.cs" />
-    <Compile Include="System\ActionException.cs" />
-    <Compile Include="System\Disposable.cs" />
-    <Compile Include="System\DisposableSingletonManager.cs" />
-    <Compile Include="System\Singleton.cs" />
-    <Compile Include="System\Exception.cs" />
-    <Compile Include="System\Enum.cs" />
-    <Compile Include="System\IDisposableSingleton.cs" />
-    <Compile Include="System\Log.cs" />
-    <Compile Include="System\LogLevel.cs" />
-    <Compile Include="System.Collections.Generic\PathComparer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System.Collections.Generic\SerializableList.cs" />
-    <Compile Include="System.Drawing\BitmapSourceConverter.cs" />
-    <Compile Include="System.Windows.Data\ValueConverter.cs" />
-    <Compile Include="System.Windows\DO.cs" />
-    <Compile Include="System.Windows\Extensions.cs" />
-    <Compile Include="System.Windows\DependencyObjectBase.cs" />
-    <Compile Include="System.Windows\FlowDirectionToVisibilityConverter.cs" />
-    <Compile Include="System\Environment.cs" />
-    <Compile Include="System\Guid.cs" />
-    <Compile Include="System\IntPtr.cs" />
-    <Compile Include="System\SingletonFast.cs" />
-    <Compile Include="System\DisposableSingleton.cs" />
-    <Compile Include="System\SingletonManager.cs" />
-    <Compile Include="System\String.cs" />
-    <Compile Include="System.Collections.Generic\TwoWayDictionary.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>$(AllSupportedTFMs)</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Reference Include="PresentationCore" />
+		<Reference Include="PresentationFramework" />
+		<Reference Include="WindowsBase" />
+	</ItemGroup>
+
 </Project>

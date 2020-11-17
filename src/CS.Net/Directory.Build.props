@@ -1,35 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project>
 
+	<!-- Set properties for creation of a NuGet package -->
 	<PropertyGroup>
-		<TargetFrameworkVersions>v3.5-client;v4.6;v4.6.2;v4.7.2;v4.8</TargetFrameworkVersions>
-		<TargetFrameworks>net35-client;net46;net462;net472;net48</TargetFrameworks>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
-		<AssignedTargetFrameworkVersion Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">v4.7.2</AssignedTargetFrameworkVersion>
-	</PropertyGroup>
-
-
-	<PropertyGroup>
 		<PackageId>CS.Net</PackageId>
 		<Title>CS.Net</Title>
-		<Version>1.1.1120</Version>
-		<Authors>Foretold-Software</Authors>
-		<Company>Foretold Software, LLC</Company>
-		<Copyright>Copyright © Foretold Software, LLC. All rights reserved.</Copyright>
 		<Description>A .Net library for code simplification.</Description>
+		<Authors>Foretold-Software</Authors>
+
 		<PackageTags>.Net Framework;Tools;Log;Logging;Shortcuts;Code Simplification;Simplify;Observable Dictionary;ObservableDictionary;Recursive Collection;RecursiveCollection;Disposable;Singleton;Icon</PackageTags>
 		<PackageProjectUrl>https://github.com/Foretold-Software/csdotnet</PackageProjectUrl>
 
-		<IncludeBuildOutput>false</IncludeBuildOutput>
 		<PackageLicenseFile>license.md</PackageLicenseFile>
 		<LicenseFilePath>$([MSBuild]::GetPathOfFileAbove($(PackageLicenseFile), $(MSBuildThisFileDirectory)))</LicenseFilePath>
 	</PropertyGroup>
+
+	<!-- Include the non-build file in the NuGet package -->
 	<ItemGroup>
-		<None Include="$(LicenseFilePath)" Pack="true" PackagePath=""/>
+		<None Include="$(LicenseFilePath)" Pack="true" PackagePath="" Visible="false" />
 	</ItemGroup>
 
+
+	<!-- Make internal class members visible to the unit testing project. -->
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+			<_Parameter1>CS.Net.Tests</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
+
+
+	<!-- Hide this file from Solution Explorer -->
+	<ItemGroup>
+		<None Include="$([MSBuild]::MakeRelative($(MSBuildProjectDirectory), $(MSBuildThisFileFullPath)))" Visible="false" />
+	</ItemGroup>
 
 	<!-- Import the next higher Directory.Build.props file. -->
 	<PropertyGroup>

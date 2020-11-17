@@ -1,16 +1,10 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
+﻿<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project>
 
 	<!-- Output paths -->
 	<PropertyGroup>
 		<DocumentationFile>$(OutputPath)$(TargetName).xml</DocumentationFile>
 	</PropertyGroup>
-
-	<Import Project="$(MSBuildThisFileDirectory)build.multi.targets" Condition=" '$(TargetFrameworkVersions)' != '' " />
-
-	<!-- Automatic versioning -->
-	<Import Project="$(MSBuildThisFileDirectory)versioning.targets" />
 
 </Project>

@@ -1,46 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
+﻿<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project>
 
-	<!-- Common csproj properties -->
+	<!-- Common build settings -->
 	<PropertyGroup>
-		<Configuration          Condition=" '' == '$(Configuration)' "         >Debug</Configuration>
-		<Platform               Condition=" '' == '$(Platform)' "              >AnyCPU</Platform>
-		<TargetFrameworkVersion Condition=" '' == '$(TargetFrameworkVersion)' ">v4.7.2</TargetFrameworkVersion>
-		<AppDesignerFolder>Properties</AppDesignerFolder>
-		<FileAlignment>512</FileAlignment>
 		<Deterministic>true</Deterministic>
-		<NoWarn>1591</NoWarn>
+		<NoWarn>1591;$(NoWarn)</NoWarn>
 	</PropertyGroup>
 
-
-	<!-- Configuration-specific properties -->
+	<!-- Common assembly attributes -->
 	<PropertyGroup>
-		<DefineConstants>TRACE;$(DefineConstants)</DefineConstants>
-		<ErrorReport>prompt</ErrorReport>
-		<WarningLevel>4</WarningLevel>
-		<PlatformTarget>$(Platform)</PlatformTarget>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
-		<Optimize>false</Optimize>
-		<DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-		<DebugType>pdbonly</DebugType>
-		<Optimize>true</Optimize>
+		<Company>Foretold Software, LLC</Company>
+		<Copyright>Copyright © Foretold Software, LLC. All rights reserved.</Copyright>
 	</PropertyGroup>
 
-
-	<!-- Output paths -->
+	<!-- Supported .Net Framework versions -->
 	<PropertyGroup>
-		<OutputPath            >bin\$(Configuration)\</OutputPath>
-		<IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+		<!-- Support extends through 5-10-2022 (and likely longer) -->
+		<AllSupportedTFMs>net48</AllSupportedTFMs>
+
+		<!-- Support extends through 5-11-2021 -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net472</AllSupportedTFMs>
+
+		<!-- Support extends through 10-13-2026 -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net462</AllSupportedTFMs>
+
+		<!-- Support extends through 10-14-2025 -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net46</AllSupportedTFMs>
+
+		<!-- Support extends through 10-10-2028 -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net35-client</AllSupportedTFMs>
 	</PropertyGroup>
-
-
-	<Import Project="$(MSBuildThisFileDirectory)build.multi.props" Condition=" '$(TargetFrameworkVersions)' != '' " />
 
 </Project>

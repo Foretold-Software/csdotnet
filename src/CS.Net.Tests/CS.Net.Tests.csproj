@@ -1,61 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
+﻿<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <ProjectGuid>{5A581BBC-D166-4768-9FD0-55C09B32DE96}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>CS.Net.Tests</RootNamespace>
-    <AssemblyName>CS.Net.Tests</AssemblyName>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">15.0</VisualStudioVersion>
-    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
-    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
-    <IsCodedUITest>False</IsCodedUITest>
-    <TestProjectType>UnitTest</TestProjectType>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CS.Net\CS.Net.csproj">
-      <Project>{91C7E35B-E4A7-43C3-AA26-FECA9F1E2F50}</Project>
-      <Name>CS.Net</Name>
-      <AdditionalProperties>AssignedTargetFrameworkVersion=v3.5-client</AdditionalProperties>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="System.Collections.ObjectModel\DistinctCollectionTest.cs" />
-    <Compile Include="System.Collections.ObjectModel\TieredListTest.cs" />
-    <Compile Include="System.Collections.ObjectModel\RecursiveCollectionTest.cs" />
-    <Compile Include="System.Globalization\CultureInfoTest.cs" />
-    <Compile Include="System.IO\PathTest.cs" />
-    <Compile Include="System.IO\WorkingDirectoryTest.cs" />
-    <Compile Include="System\SingletonTest.cs" />
-    <Compile Include="System\DisposableSingletonTest.cs" />
-    <Compile Include="Microsoft.Win32\ExtensionsTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\EnvironmentTest.cs" />
-    <Compile Include="System\GuidTest.cs" />
-    <Compile Include="System\IntPtrTest.cs" />
-    <Compile Include="System\StringTest.cs" />
-    <Compile Include="TypesForTesting\System.Collections.Generic\TieredList.cs" />
-    <Compile Include="TypesForTesting\System\DisposableSingleton.cs" />
-    <Compile Include="TypesForTesting\System\Enum.cs" />
-    <Compile Include="System\EnumTest.cs" />
-    <Compile Include="TypesForTesting\System\Singleton.cs" />
-    <Compile Include="TypesForTesting\System\ValueString.cs" />
-    <Compile Include="Microsoft.VisualStudio.TestTools.UnitTesting\Assert.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
-  </ItemGroup>
-  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+
+		<IsPackable>false</IsPackable>
+
+		<AssemblyTitle>CS.Net unit tests</AssemblyTitle>
+		<Product>CS.Net unit tests</Product>
+		<Description>A library for unit testing the CS.Net project.</Description>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\CS.Net\CS.Net.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+		<PackageReference Include="MSTest.TestAdapter" Version="2.1.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="2.1.2" />
+		<PackageReference Include="coverlet.collector" Version="1.3.0" />
+	</ItemGroup>
+
 </Project>
