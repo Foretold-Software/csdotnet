@@ -8,7 +8,7 @@ namespace System
 		{
 			get
 			{
-#if NET35
+#if NET35 || NET35_CLIENT
 				// .Net 3.5
 				return IntPtr.Size == 8;
 #else

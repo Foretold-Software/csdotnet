@@ -33,7 +33,7 @@ namespace System
 		/// <returns>Return true if the conversion was successful, otherwise false.</returns>
 		public static bool TryParse<T>(string value, bool ignoreCase, out T result) where T : struct
 		{
-#if NET35 // .Net 3.5
+#if NET35 || NET35_CLIENT
 			try
 			{
 				decimal decimalValue;

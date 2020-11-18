@@ -23,7 +23,7 @@ namespace System
 		/// </returns>
 		public static bool IsNullOrWhiteSpace(string value)
 		{
-#if NET35
+#if NET35 || NET35_CLIENT
 			return value == null || value.Trim().Length == 0;
 #else
 			return string.IsNullOrWhiteSpace(value);

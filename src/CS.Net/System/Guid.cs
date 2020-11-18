@@ -6,7 +6,7 @@ namespace System
 	{
 		public static Guid Parse(string value)
 		{
-#if NET35
+#if NET35 || NET35_CLIENT
 			return new Guid(value);
 #else
 			return Guid.Parse(value);

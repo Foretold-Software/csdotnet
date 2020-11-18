@@ -52,7 +52,7 @@ namespace System.IO
 		/// </exception>
 		public static string Combine(params string[] paths)
 		{
-#if NET35
+#if NET35 || NET35_CLIENT
 			var path = string.Empty;
 
 			for (int i = 0; i < paths.Length; i++)
@@ -79,7 +79,7 @@ namespace System.IO
 		/// <returns>The path to windir.</returns>
 		public static string GetWindowsDirectory()
 		{
-#if NET35
+#if NET35 || NET35_CLIENT
 			// .Net 3.5
 			return Environment.GetEnvironmentVariable("windir", EnvironmentVariableTarget.Machine);
 #else
