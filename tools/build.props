@@ -29,6 +29,7 @@
 		<AllSupportedTFMs>$(AllSupportedTFMs);net46</AllSupportedTFMs>
 
 		<!-- Support extends through 10-10-2028 -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net35</AllSupportedTFMs>
 		<AllSupportedTFMs>$(AllSupportedTFMs);net35-client</AllSupportedTFMs>
 	</PropertyGroup>
 
