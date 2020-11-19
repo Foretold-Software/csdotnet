@@ -142,7 +142,7 @@ namespace System.Collections.ObjectModel
 		private T _Value;
 		private ObservableRecursiveCollection<T> _Parent;
 		#endregion
-		
+
 		#region Properties
 		/// <summary>
 		/// The value at this node of the <see cref="ObservableRecursiveCollection{T}"/>.

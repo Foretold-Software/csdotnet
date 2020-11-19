@@ -50,7 +50,7 @@ namespace System.Windows.Controls
 			{
 				throw new InvalidOperationException("The value parameter must be of type System.Boolean.");
 			}
-        }
+		}
 
 		/// <summary>
 		/// Converts a <see cref="Visibility"/> enumeration value to a <see cref="bool"/> value.

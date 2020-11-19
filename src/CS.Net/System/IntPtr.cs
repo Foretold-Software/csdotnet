@@ -18,8 +18,8 @@ namespace System
 				return new IntPtr(ptr.ToInt32() + offset);
 			}
 #else
-		// .Net 4+
-		return ptr + offset;
+			// .Net 4+
+			return ptr + offset;
 #endif
 		}
 	}

@@ -293,7 +293,7 @@ namespace System.IO
 				{
 					throw new ArgumentException("A file with this name already exists: " + directory);
 				}
-				
+
 				var dir = Directory.CreateDirectory(directory);
 
 				if (dir == null)
@@ -314,7 +314,7 @@ namespace System.IO
 		//{
 		//	return folder.FullName;
 		//}
-		
+
 		///// <summary>
 		///// Converts a string path to an instance of <see cref="Folder"/>.
 		///// </summary>

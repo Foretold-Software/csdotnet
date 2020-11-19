@@ -30,7 +30,7 @@ namespace System
 		ValueN4 = -4,
 		ValueN8 = -8,
 		ValueMin = sbyte.MinValue,
-        ValueMax = sbyte.MaxValue
+		ValueMax = sbyte.MaxValue
 	}
 
 	internal enum ShortEnum : short

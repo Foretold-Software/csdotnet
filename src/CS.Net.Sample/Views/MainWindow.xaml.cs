@@ -33,7 +33,7 @@ namespace CS.Net.Sample.Views
 
 			BeginAddingItems();
 
-            Show();
+			Show();
 			System.Windows.Threading.Dispatcher.Run();
 		}
 
