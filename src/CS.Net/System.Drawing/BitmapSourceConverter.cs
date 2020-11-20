@@ -5,18 +5,13 @@ using System.Windows.Data;
 
 namespace System.Drawing
 {
-	public class BitmapSourceConverter : IValueConverter
+	public class BitmapSourceConverter : OneWayValueConverter, IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			var bitmap = value as Bitmap;
 
 			return bitmap.ToBitmapSource();
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

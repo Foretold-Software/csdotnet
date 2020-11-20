@@ -7,9 +7,9 @@ using System.Windows.Media;
 
 namespace System.Windows
 {
-	public class FlowDirectionToVisibilityConverter : IValueConverter
+	public class FlowDirectionToVisibilityConverter : OneWayValueConverter, IValueConverter
 	{
-		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			try
 			{
@@ -66,11 +66,6 @@ namespace System.Windows
 			catch { }
 
 			return Visibility.Collapsed;
-		}
-
-		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }
