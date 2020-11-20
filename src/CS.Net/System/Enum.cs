@@ -31,6 +31,10 @@ namespace System
 		/// <param name="ignoreCase">Indicates whether to ignore case when converting the string.</param>
 		/// <param name="result">The resulting enumeration value, returned.</param>
 		/// <returns>Return true if the conversion was successful, otherwise false.</returns>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in method:
+		/// System.Enum.TryParse&lt;T&gt;(System.String, out T)
+		/// </remarks>
 		public static bool TryParse<T>(string value, bool ignoreCase, out T result) where T : struct
 		{
 #if NET35 || NET35_CLIENT
@@ -74,7 +78,7 @@ namespace System
 			result = default(T);
 			return false;
 
-#else // .Net 4+
+#else
 			return Enum.TryParse<T>(value, out result);
 #endif
 		}

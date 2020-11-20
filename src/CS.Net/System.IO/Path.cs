@@ -50,6 +50,10 @@ namespace System.IO
 		/// <exception cref="ArgumentNullException">
 		/// One of the strings in the array is null.
 		/// </exception>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in method:
+		/// System.IO.Path.Combine(params System.String[])
+		/// </remarks>
 		public static string Combine(params string[] paths)
 		{
 #if NET35 || NET35_CLIENT
@@ -77,13 +81,15 @@ namespace System.IO
 		/// Gets the path to windir from the system environment variable.
 		/// </summary>
 		/// <returns>The path to windir.</returns>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in method:
+		/// System.Environment.GetFolderPath(System.Environment.SpecialFolder.Windows)
+		/// </remarks>
 		public static string GetWindowsDirectory()
 		{
 #if NET35 || NET35_CLIENT
-			// .Net 3.5
 			return Environment.GetEnvironmentVariable("windir", EnvironmentVariableTarget.Machine);
 #else
-			// .Net 4+
 			return Environment.GetFolderPath(Environment.SpecialFolder.Windows);
 #endif
 		}

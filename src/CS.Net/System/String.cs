@@ -21,6 +21,10 @@ namespace System
 		/// Returns true if the string is null, empty, or contains only whitespace.
 		/// Returns false otherwise.
 		/// </returns>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in method:
+		/// System.String.IsNullOrWhiteSpace(System.String)
+		/// </remarks>
 		public static bool IsNullOrWhiteSpace(string value)
 		{
 #if NET35 || NET35_CLIENT

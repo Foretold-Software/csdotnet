@@ -4,6 +4,15 @@ namespace System
 {
 	public static class _Guid
 	{
+		/// <summary>
+		/// Converts the string representation of a GUID to the equivalent System.Guid structure.
+		/// </summary>
+		/// <param name="value">The string to convert.</param>
+		/// <returns>A structure that contains the value that was parsed.</returns>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in method:
+		/// System.Guid.Parse(System.String)
+		/// </remarks>
 		public static Guid Parse(string value)
 		{
 #if NET35 || NET35_CLIENT
