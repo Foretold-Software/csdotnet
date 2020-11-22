@@ -51,7 +51,6 @@ stages:
 
     - task: VSTest@2
       displayName: Run unit tests
-      condition: 'false'
       inputs:
         platform: '$(buildPlatform)'
         configuration: '$(buildConfiguration)'
