@@ -18,7 +18,7 @@ namespace System.Globalization
 		/// </param>
 		/// <returns>
 		/// Returns true if an instance of <see cref="CultureInfo"/> was created successfully.
-		/// Otherwise, returns falls and the <paramref name="cultureInfo"/> is set to null.
+		/// Otherwise, returns false and the <paramref name="cultureInfo"/> is set to null.
 		/// </returns>
 		public static bool TryGetCulture(string name, out CultureInfo cultureInfo)
 		{
@@ -46,7 +46,7 @@ namespace System.Globalization
 		/// </param>
 		/// <returns>
 		/// Returns true if an instance of <see cref="CultureInfo"/> was created successfully.
-		/// Otherwise, returns falls and the <paramref name="cultureInfo"/> is set to null.
+		/// Otherwise, returns false and the <paramref name="cultureInfo"/> is set to null.
 		/// </returns>
 		public static bool TryGetSpecificCulture(string name, out CultureInfo cultureInfo)
 		{
