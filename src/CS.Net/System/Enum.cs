@@ -38,6 +38,14 @@ namespace System
 		public static bool TryParse<T>(string value, bool ignoreCase, out T result) where T : struct
 		{
 #if NET35 || NET35_CLIENT
+			return TryParse_Net35(value, ignoreCase, out result);
+#else
+			return Enum.TryParse<T>(value, out result);
+#endif
+		}
+
+		internal static bool TryParse_Net35<T>(string value, bool ignoreCase, out T result) where T : struct
+		{
 			try
 			{
 				decimal decimalValue;
@@ -77,10 +85,6 @@ namespace System
 
 			result = default(T);
 			return false;
-
-#else
-			return Enum.TryParse<T>(value, out result);
-#endif
 		}
 
 		/// <summary>

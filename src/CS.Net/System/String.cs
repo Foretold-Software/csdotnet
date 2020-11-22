@@ -28,10 +28,15 @@ namespace System
 		public static bool IsNullOrWhiteSpace(string value)
 		{
 #if NET35 || NET35_CLIENT
-			return value == null || value.Trim().Length == 0;
+			return IsNullOrWhiteSpace_Net35(value);
 #else
 			return string.IsNullOrWhiteSpace(value);
 #endif
+		}
+
+		internal static bool IsNullOrWhiteSpace_Net35(string value)
+		{
+			return value == null || value.Trim().Length == 0;
 		}
 
 		/// <summary>

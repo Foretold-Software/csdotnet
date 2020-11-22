@@ -57,6 +57,14 @@ namespace System.IO
 		public static string Combine(params string[] paths)
 		{
 #if NET35 || NET35_CLIENT
+			return Combine_Net35(paths);
+#else
+			return Path.Combine(paths);
+#endif
+		}
+
+		internal static string Combine_Net35(params string[] paths)
+		{
 			var path = string.Empty;
 
 			for (int i = 0; i < paths.Length; i++)
@@ -72,9 +80,6 @@ namespace System.IO
 			}
 
 			return path;
-#else
-			return Path.Combine(paths);
-#endif
 		}
 
 		/// <summary>
@@ -88,10 +93,15 @@ namespace System.IO
 		public static string GetWindowsDirectory()
 		{
 #if NET35 || NET35_CLIENT
-			return Environment.GetEnvironmentVariable("windir", EnvironmentVariableTarget.Machine);
+			return GetWindowsDirectory_Net35();
 #else
 			return Environment.GetFolderPath(Environment.SpecialFolder.Windows);
 #endif
+		}
+
+		internal static string GetWindowsDirectory_Net35()
+		{
+			return Environment.GetEnvironmentVariable("windir", EnvironmentVariableTarget.Machine);
 		}
 
 		/// <summary>

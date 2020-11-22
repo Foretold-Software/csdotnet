@@ -16,11 +16,14 @@ namespace System
 			get
 			{
 #if NET35 || NET35_CLIENT
-				return IntPtr.Size == 8;
+				return Is64BitOperatingSystem_Net35;
 #else
 				return Environment.Is64BitOperatingSystem;
 #endif
 			}
 		}
+
+		internal static bool Is64BitOperatingSystem_Net35
+		{ get { return IntPtr.Size == 8; } }
 	}
 }

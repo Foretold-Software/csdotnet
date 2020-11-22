@@ -45,7 +45,7 @@ namespace System.Collections.Generic
 	public static class SerializableList
 	{
 		#region Fields
-		private const string delimiter = ",";
+		internal const string delimiter = ",";
 		#endregion
 
 		/// <summary>
@@ -74,10 +74,15 @@ namespace System.Collections.Generic
 		internal static string ToString<T>(SerializableList<T> list) where T : IConvertible
 		{
 #if NET35 || NET35_CLIENT
-			throw new NotImplementedException(); //TODO: This in .Net 3.5
+			return ToString_Net35(list);
 #else
 			return string.Join(delimiter, list);
 #endif
+		}
+
+		internal static string ToString_Net35<T>(SerializableList<T> list) where T : IConvertible
+		{
+			return string.Join(delimiter, list.Select(item => item?.ToString()).ToArray());
 		}
 	}
 }

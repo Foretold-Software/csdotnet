@@ -17,6 +17,14 @@ namespace System
 		public static IntPtr Offset(IntPtr ptr, int offset)
 		{
 #if NET35 || NET35_CLIENT
+			return Offset_Net35(ptr, offset);
+#else
+			return ptr + offset;
+#endif
+		}
+
+		internal static IntPtr Offset_Net35(IntPtr ptr, int offset)
+		{
 			//TODO IMPORTANT ASAP: Test this somehow to make sure the values are correct.
 			if (IntPtr.Size == 8)
 			{
@@ -26,9 +34,6 @@ namespace System
 			{
 				return new IntPtr(ptr.ToInt32() + offset);
 			}
-#else
-			return ptr + offset;
-#endif
 		}
 	}
 }

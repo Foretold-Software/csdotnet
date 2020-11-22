@@ -16,10 +16,15 @@ namespace System
 		public static Guid Parse(string value)
 		{
 #if NET35 || NET35_CLIENT
-			return new Guid(value);
+			return Parse_Net35(value);
 #else
 			return Guid.Parse(value);
 #endif
+		}
+
+		internal static Guid Parse_Net35(string value)
+		{
+			return new Guid(value);
 		}
 	}
 }
