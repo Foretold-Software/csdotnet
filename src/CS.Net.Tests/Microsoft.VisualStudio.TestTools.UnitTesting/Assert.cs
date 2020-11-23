@@ -12,6 +12,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// or if both throw an exception but the exception type is not equal.
 		/// Otherwise, this method does not cause a test failure.
 		/// </summary>
+		/// <param name="assert">Throw-away parameter to enable Assert extension methods.</param>
 		/// <param name="expectedAction">The action that throws the expected exception, if any.</param>
 		/// <param name="actualAction">The action that throws the actual exception, if any.</param>
 		internal static void SameException(this Assert assert, Action expectedAction, Action actualAction)
@@ -66,6 +67,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// Otherwise, this method does not cause a test failure.
 		/// </summary>
 		/// <typeparam name="T">Return type of the action.</typeparam>
+		/// <param name="assert">Throw-away parameter to enable Assert extension methods.</param>
 		/// <param name="expectedAction">The action returning the expected value, or throwing the expected exception.</param>
 		/// <param name="actualAction">The action returning the actual value, or throwing the actual exception.</param>
 		internal static void SameReturnValueAndException<T>(this Assert assert, Func<T> expectedAction, Func<T> actualAction)
@@ -126,6 +128,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// Otherwise, this method does not cause a test failure.
 		/// </summary>
 		/// <typeparam name="T">Item type of the returned collection.</typeparam>
+		/// <param name="assert">Throw-away parameter to enable Assert extension methods.</param>
 		/// <param name="expectedAction">The action returning the expected value, or throwing the expected exception.</param>
 		/// <param name="actualAction">The action returning the actual value, or throwing the actual exception.</param>
 		internal static void SameReturnCollectionAndException<T>(this Assert assert, Func<IList<T>> expectedAction, Func<IList<T>> actualAction)
@@ -187,6 +190,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// Otherwise, this method does not cause a test failure.
 		/// </summary>
 		/// <typeparam name="T">Item type of the collection items.</typeparam>
+		/// <param name="assert">Throw-away parameter to enable Assert extension methods.</param>
 		/// <param name="expected">The expected collection.</param>
 		/// <param name="actual">The actual collection.</param>
 		internal static void SameCollectionValues<T>(this Assert assert, IList<T> expected, IList<T> actual)
