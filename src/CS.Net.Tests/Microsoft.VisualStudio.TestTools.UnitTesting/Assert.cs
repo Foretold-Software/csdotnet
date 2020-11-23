@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
-	internal class _Assert
+	internal static class _Assert
 	{
 		/// <summary>
 		/// Fails the test if only one of the actions throws an exception,
@@ -14,7 +14,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// </summary>
 		/// <param name="expectedAction">The action that throws the expected exception, if any.</param>
 		/// <param name="actualAction">The action that throws the actual exception, if any.</param>
-		internal static void SameException(Action expectedAction, Action actualAction)
+		internal static void SameException(this Assert assert, Action expectedAction, Action actualAction)
 		{
 			Exception actualException   = null;
 			Exception expectedException = null;
@@ -68,7 +68,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// <typeparam name="T">Return type of the action.</typeparam>
 		/// <param name="expectedAction">The action returning the expected value, or throwing the expected exception.</param>
 		/// <param name="actualAction">The action returning the actual value, or throwing the actual exception.</param>
-		internal static void SameReturnValueAndException<T>(Func<T> expectedAction, Func<T> actualAction)
+		internal static void SameReturnValueAndException<T>(this Assert assert, Func<T> expectedAction, Func<T> actualAction)
 		{
 			T actualValue               = default(T);
 			T expectedValue             = default(T);
@@ -128,7 +128,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// <typeparam name="T">Item type of the returned collection.</typeparam>
 		/// <param name="expectedAction">The action returning the expected value, or throwing the expected exception.</param>
 		/// <param name="actualAction">The action returning the actual value, or throwing the actual exception.</param>
-		internal static void SameReturnCollectionAndException<T>(Func<IList<T>> expectedAction, Func<IList<T>> actualAction)
+		internal static void SameReturnCollectionAndException<T>(this Assert assert, Func<IList<T>> expectedAction, Func<IList<T>> actualAction)
 		{
 			IList<T> actualValue        = default(IList<T>);
 			IList<T> expectedValue      = default(IList<T>);
@@ -177,7 +177,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 			}
 			else
 			{
-				SameCollectionValues(expectedValue, actualValue);
+				SameCollectionValues(assert, expectedValue, actualValue);
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace Microsoft.VisualStudio.TestTools.UnitTesting
 		/// <typeparam name="T">Item type of the collection items.</typeparam>
 		/// <param name="expected">The expected collection.</param>
 		/// <param name="actual">The actual collection.</param>
-		internal static void SameCollectionValues<T>(IList<T> expected, IList<T> actual)
+		internal static void SameCollectionValues<T>(this Assert assert, IList<T> expected, IList<T> actual)
 		{
 			if (expected == null)
 			{
