@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information.
 
-using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
-namespace System.Collections.Generic
+namespace System.Collections.ObjectModel
 {
 	/// <summary>
 	/// Provides a convenient method for quickly disposing of a collection
