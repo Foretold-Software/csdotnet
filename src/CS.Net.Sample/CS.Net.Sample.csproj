@@ -12,7 +12,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\CS.Net\CS.Net.csproj" />
+		<PackageReference Include="CS.Net" Version="1.1.109" />
 	</ItemGroup>
 
 	<ItemGroup>
