@@ -8,13 +8,50 @@ namespace System.Collections.Generic
 	/// Provides a convenient method for quickly disposing of a collection
 	/// of objects that implement the <see cref="IDisposable"/> interface.
 	/// </summary>
-	/// <typeparam name="T">The type of the objects in the collection.</typeparam>
+	/// <typeparam name="T">The type of the items in the collection.</typeparam>
 	/// <remarks>
 	/// Dispose Pattern reference:
 	/// https://msdn.microsoft.com/en-us/library/b1yfkh5e.aspx
 	/// </remarks>
 	public class DisposableCollection<T> : ListContainer<T>, IDisposable where T : IDisposable
 	{
+		#region Constructors
+		/// <summary>
+		/// Creates a new instance of <see cref="DisposableCollection{T}"/>.
+		/// </summary>
+		public DisposableCollection()
+		{
+			ListItems = new List<T>();
+		}
+
+		/// <summary>
+		/// Creates a new instance of <see cref="DisposableCollection{T}"/> with the given capacity.
+		/// </summary>
+		/// <param name="capacity">The number of elements that the new collection can initially store.</param>
+		public DisposableCollection(int capacity)
+		{
+			ListItems = new List<T>(capacity);
+		}
+
+		/// <summary>
+		/// Creates a new instance of <see cref="DisposableCollection{T}"/> with the given values.
+		/// </summary>
+		/// <param name="collection">The collection of items to use.</param>
+		public DisposableCollection(IEnumerable<T> collection)
+		{
+			ListItems = new List<T>(collection);
+		}
+
+		/// <summary>
+		/// Creates a new instance of <see cref="DisposableCollection{T}"/> with the given values.
+		/// </summary>
+		/// <param name="collection">The collection of items to use.</param>
+		public DisposableCollection(IList<T> collection)
+		{
+			ListItems = collection;
+		}
+		#endregion
+
 		#region Fields
 		/// <summary>
 		/// Used to detect redundant calls.
@@ -67,5 +104,33 @@ namespace System.Collections.Generic
 			Dispose(false);
 		}
 		#endregion
+	}
+
+	/// <summary>
+	/// A class providing extension methods for the <see cref="DisposableCollection{T}"/> class.
+	/// </summary>
+	public static class DisposableCollection
+	{
+		/// <summary>
+		/// Returns a <see cref="DisposableCollection"/> containing the items in the given collection.
+		/// </summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection of items to use.</param>
+		/// <returns>Returns a <see cref="DisposableCollection"/> containing the items in the given collection.</returns>
+		public static DisposableCollection<T> AsDisposableCollection<T>(this IList<T> collection) where T : IDisposable
+		{
+			return new DisposableCollection<T>(collection);
+		}
+
+		/// <summary>
+		/// Returns a <see cref="DisposableCollection"/> containing the items in the given collection.
+		/// </summary>
+		/// <typeparam name="T">The type of the items in the collection.</typeparam>
+		/// <param name="collection">The collection of items to use.</param>
+		/// <returns>Returns a <see cref="DisposableCollection"/> containing the items in the given collection.</returns>
+		public static DisposableCollection<T> AsDisposableCollection<T>(this IEnumerable<T> collection) where T : IDisposable
+		{
+			return new DisposableCollection<T>(collection);
+		}
 	}
 }
