@@ -9,15 +9,17 @@ namespace System.IO
 		{
 			this.SuppressDisposal = false;
 		}
+
 		private TempFolder(string path, bool suppressDisposal) : base(path)
 		{
 			this.SuppressDisposal = suppressDisposal;
 		}
+
 		~TempFolder()
 		{
 			if (!this.SuppressDisposal)
 			{
-				this.Dispose(false);
+				this.Dispose();
 			}
 		}
 		#endregion
@@ -35,8 +37,6 @@ namespace System.IO
 		{
 			//Get a temporary location.
 			string tempFolder = TempFolder.GetNewPath();
-
-			//Log.WriteLine(LogLevel.Verbose, "Created new temporary folder: '{0}'", tempFolder);
 
 			return new TempFolder(tempFolder);
 		}
@@ -57,20 +57,10 @@ namespace System.IO
 		/// </summary>
 		public void Dispose()
 		{
-			this.Dispose(true);
-		}
-
-		private void Dispose(bool disposing)
-		{
-			if (Directory.Exists(this.FullName))
+			if (Directory.Exists(FullName))
 			{
-				Directory.Delete(this.FullName, true);
-				//if (disposing) Log.WriteLine("Temporary folder deleted: " + this.FullName);
+				Directory.Delete(FullName, true);
 			}
-			//else if (disposing)
-			//{
-			//	Log.WriteLine("Temporary folder already deleted, ignoring: " + this.FullName);
-			//}
 		}
 		#endregion
 	}
