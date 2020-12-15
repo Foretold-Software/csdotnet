@@ -192,16 +192,34 @@ namespace System.Collections.ObjectModel
 		#endregion
 
 		#region Event Trigger Methods
+		/// <summary>
+		/// Invokes the <see cref="PropertyChangedEventHandler"/> on the given property.
+		/// </summary>
+		/// <param name="propertyName">
+		/// The name of the property that was changed.
+		/// </param>
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
 			OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
 		}
 
+		/// <summary>
+		/// Invokes the <see cref="PropertyChangedEventHandler"/> on the given property.
+		/// </summary>
+		/// <param name="args">
+		/// The <see cref="PropertyChangedEventArgs"/> for the property that was changed.
+		/// </param>
 		protected virtual void OnPropertyChanged(PropertyChangedEventArgs args)
 		{
 			PropertyChanged?.Invoke(this, args);
 		}
 
+		/// <summary>
+		/// Invokes the <see cref="NotifyCollectionChangedEventHandler"/> on the given collection.
+		/// </summary>
+		/// <param name="args">
+		/// The <see cref="NotifyCollectionChangedEventArgs"/> for the collection that was changed.
+		/// </param>
 		protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs args)
 		{
 			CollectionChanged?.Invoke(this, args);

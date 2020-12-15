@@ -127,6 +127,18 @@ namespace System
 			return string.Format("\"{0}\"", value ?? string.Empty);
 		}
 
+		/// <summary>
+		/// Performs safe exceptionless string formatting.
+		/// </summary>
+		/// <param name="format">
+		/// A composite format string.
+		/// </param>
+		/// <param name="args">
+		/// An array containing the objects to format into the string.
+		/// </param>
+		/// <returns>
+		/// Returns a formatted string, or an error message string in the case of a formatting error.
+		/// </returns>
 		[Obsolete("Remove this method from this project.")]
 		public static string Format(string format, params object[] args)
 		{

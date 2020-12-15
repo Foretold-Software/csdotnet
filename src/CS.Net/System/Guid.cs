@@ -2,6 +2,9 @@
 
 namespace System
 {
+	/// <summary>
+	/// A static class with helper methods to simplify GUID operations.
+	/// </summary>
 	public static class _Guid
 	{
 		/// <summary>
@@ -22,6 +25,11 @@ namespace System
 #endif
 		}
 
+		/// <summary>
+		/// Converts the string representation of a GUID to the equivalent System.Guid structure.
+		/// </summary>
+		/// <param name="value">The string to convert.</param>
+		/// <returns>A structure that contains the value that was parsed.</returns>
 		internal static Guid Parse_Net35(string value)
 		{
 			return new Guid(value);

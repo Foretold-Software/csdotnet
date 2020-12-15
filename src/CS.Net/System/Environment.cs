@@ -2,6 +2,9 @@
 
 namespace System
 {
+	/// <summary>
+	/// A static class with helper methods to simplify environment detection operations.
+	/// </summary>
 	public static class _Environment
 	{
 		/// <summary>
@@ -23,6 +26,9 @@ namespace System
 			}
 		}
 
+		/// <summary>
+		/// Determines whether the current operating system is a 64-bit operating system.
+		/// </summary>
 		internal static bool Is64BitOperatingSystem_Net35
 		{ get { return IntPtr.Size == 8; } }
 	}

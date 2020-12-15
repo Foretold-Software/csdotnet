@@ -16,6 +16,9 @@ namespace System.Collections.Generic
 		where TKey : IEquatable<TKey>
 		where TValue : IEquatable<TValue>
 	{
+		/// <summary>
+		/// Creates a new instance of type <see cref="TwoWayDictionary{TKey, TValue}"/>.
+		/// </summary>
 		public TwoWayDictionary()
 		{
 			var keyType = typeof(TKey);
@@ -26,6 +29,15 @@ namespace System.Collections.Generic
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets the key of the <see cref="KeyValuePair{TKey, TValue}"/> with the given value.
+		/// </summary>
+		/// <param name="tValue">
+		/// The value who's key will be found.
+		/// </param>
+		/// <returns>
+		/// Returns the key to the given value.
+		/// </returns>
 		public TKey this[TValue tValue]
 		{
 			get
@@ -43,6 +55,12 @@ namespace System.Collections.Generic
 				var valueExists = this.ContainsValue(tValue);
 				var existingKey = this.FirstOrDefault(kvp => object.Equals(kvp.Value, tValue)).Key;
 
+				//If the new key and the existing key are not identical, then
+				// add a KeyValuePair with the new key and the given value, and
+				// remove the KeyValuePair with the existing key from the dictionary,
+				// effectively reassigning the value to a new key.
+				//If there is no existing KeyValuePair with the given value, then
+				// add it as a new KeyValuePair.
 				if (!object.Equals(newKey, existingKey))
 				{
 					if (newKeyExists)
@@ -59,12 +77,6 @@ namespace System.Collections.Generic
 					}
 				}
 			}
-		}
-
-		private static void asdf()
-		{
-			TwoWayDictionary<string, string> twd = new TwoWayDictionary<string, string>();
-			twd["A"] = "1";
 		}
 	}
 }

@@ -2,6 +2,9 @@
 
 namespace System
 {
+	/// <summary>
+	/// A static class with helper methods to simplify pointer operations.
+	/// </summary>
 	public static class _IntPtr
 	{
 		/// <summary>
@@ -23,6 +26,16 @@ namespace System
 #endif
 		}
 
+		/// <summary>
+		/// Adds an offset to the value of a pointer.
+		/// </summary>
+		/// <param name="ptr">The pointer to add the offset to.</param>
+		/// <param name="offset">The offset to add.</param>
+		/// <returns>A new pointer that reflects the addition of offset to pointer.</returns>
+		/// <remarks>
+		/// The .Net Framework 4.0 and newer provides a built-in operator:
+		/// System.IntPtr + System.Int32
+		/// </remarks>
 		internal static IntPtr Offset_Net35(IntPtr ptr, int offset)
 		{
 			//TODO IMPORTANT ASAP: Test this somehow to make sure the values are correct.

@@ -4,8 +4,20 @@ using System.Text.RegularExpressions;
 
 namespace System.ComponentModel
 {
+	/// <summary>
+	/// A static class containing extension methods for classes within the <see cref="System.ComponentModel"/> namespace.
+	/// </summary>
 	public static class Extensions
 	{
+		/// <summary>
+		/// Converts a Win32 error code to a human-readable error message string.
+		/// </summary>
+		/// <param name="errorcode">
+		/// The Win32 error code to convert.
+		/// </param>
+		/// <returns>
+		/// Returns a human-readable error message string corresponding to the given Win32 error code.
+		/// </returns>
 		public static string ToWin32ErrorMessage(this int errorcode)
 		{
 			string message = new Win32Exception(errorcode).Message;

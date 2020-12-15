@@ -2,6 +2,9 @@
 
 namespace Microsoft.Win32
 {
+	/// <summary>
+	/// A static class containing extension methods for classes within the <see cref="Microsoft.Win32"/> namespace.
+	/// </summary>
 	public static class Extensions
 	{
 		/// <summary>
