@@ -10,19 +10,109 @@ namespace System.Diagnostics
 	public class _Process
 	{
 		#region Constructor
-		private _Process(Process process)
+		private _Process()
 		{
-			this.Process = process;
+			Process = new Process();
+			Process.StartInfo.UseShellExecute = false;
 		}
 		#endregion
 
 		#region Fields
 		private readonly Process Process;
+
+		private bool _WaitForExit = Default_WaitForExit;
+		private Action<string> _RedirectOutputAction = Default_RedirectOutputAction;
+		private Action<string> _RedirectErrorAction = Default_RedirectErrorAction;
+
+		//Default behaviors
 		private const bool Default_WaitForExit = true;
 		private const bool Default_RedirectOutputToLog = false;
 		private const bool Default_RedirectErrorToLog = false;
 		private const Action<string> Default_RedirectOutputAction = null;
 		private const Action<string> Default_RedirectErrorAction = null;
+		#endregion
+
+		#region Properties
+		/// <summary>
+		/// The executable file to run.
+		/// </summary>
+		public string Executable
+		{
+			get { return Process.StartInfo.FileName; }
+			set { Process.StartInfo.FileName = value; }
+		}
+
+		/// <summary>
+		/// The command line arguments to pass to the process, as a single string.
+		/// </summary>
+		public string Arguments
+		{
+			get { return Process.StartInfo.Arguments; }
+			set { Process.StartInfo.Arguments = value; }
+		}
+
+		/// <summary>
+		/// The working directory from which to run the process.
+		/// If the directory does not exist, it will be created.
+		/// If the value is null or an invalid directory path, the return
+		/// value of <see cref="Directory.GetCurrentDirectory"/> will be used.
+		/// </summary>
+		public string WorkingDirectory
+		{ get; set; }
+
+		/// <summary>
+		/// Indicates whether to wait for the process to exit before returning when the process is run.
+		/// </summary>
+		public bool WaitForExit
+		{
+			get { return _WaitForExit; }
+			set { _WaitForExit = value; }
+		}
+
+		/// <summary>
+		/// The action to perform when stdout output is received from the running process.
+		/// </summary>
+		public Action<string> RedirectOutputAction
+		{
+			get { return _RedirectOutputAction; }
+			set
+			{
+				//Assign the action and the value indicating whether to redirect output.
+				Process.StartInfo.RedirectStandardOutput = null != (_RedirectOutputAction = value);
+
+				//Remove the delegate if it was already assigned.
+				Process.OutputDataReceived -= OutputDataReceived;
+
+				//If redirecting output, then reassign the delegate.
+				if (Process.StartInfo.RedirectStandardOutput)
+				{
+					Process.OutputDataReceived += OutputDataReceived;
+				}
+			}
+		}
+
+		/// <summary>
+		/// The action to perform when stderr output is received from the running process.
+		/// </summary>
+		public Action<string> RedirectErrorAction
+		{
+			get { return _RedirectErrorAction; }
+			//set { Process.StartInfo.RedirectStandardError = null != (_RedirectErrorAction = value); }
+			set
+			{
+				//Assign the action and the value indicating whether to redirect output.
+				Process.StartInfo.RedirectStandardError = null != (_RedirectErrorAction = value);
+
+				//Remove the delegate if it was already assigned.
+				Process.ErrorDataReceived -= ErrorDataReceived;
+
+				//If redirecting output, then reassign the delegate.
+				if (Process.StartInfo.RedirectStandardError)
+				{
+					Process.ErrorDataReceived += ErrorDataReceived;
+				}
+			}
+		}
 		#endregion
 
 		#region Methods - Static Run
@@ -333,48 +423,7 @@ namespace System.Diagnostics
 
 		private static Process DoRun(string exe, string args, string workingDirectory, bool waitForExit, Action<string> outputDataReceived, Action<string> errorDataReceived)
 		{
-			try
-			{
-				var info = new ProcessStartInfo(exe, args);
-				info.RedirectStandardOutput = outputDataReceived != null;
-				info.RedirectStandardError = errorDataReceived != null;
-				info.UseShellExecute = false;
-				info.WorkingDirectory = workingDirectory;
-
-				var process = new Process();
-				process.StartInfo = info;
-
-				if (outputDataReceived != null)
-				{
-					process.OutputDataReceived += (s, e) => outputDataReceived(e.Data);
-				}
-				if (errorDataReceived != null)
-				{
-					process.ErrorDataReceived += (s, e) => errorDataReceived(e.Data);
-				}
-
-				process.Start();
-
-				if (outputDataReceived != null)
-				{
-					process.BeginOutputReadLine();
-				}
-				if (errorDataReceived != null)
-				{
-					process.BeginErrorReadLine();
-				}
-
-				if (waitForExit)
-				{
-					process.WaitForExit();
-				}
-
-				return process;
-			}
-			catch (Exception exc)
-			{
-				throw new Exception(string.Format("Process failed: '{0}' '{1}'", exe, args), exc);
-			}
+			return DoCreate(exe, args, workingDirectory, waitForExit, outputDataReceived, errorDataReceived)?.Run();
 		}
 		#endregion
 
@@ -617,31 +666,26 @@ namespace System.Diagnostics
 
 		private static _Process DoCreate(string exe, string args, string workingDirectory, Action<string> outputDataReceived, Action<string> errorDataReceived)
 		{
+			return DoCreate(exe, args, workingDirectory, Default_WaitForExit, outputDataReceived, errorDataReceived);
+		}
+
+		private static _Process DoCreate(string exe, string args, string workingDirectory, bool waitForExit, Action<string> outputDataReceived, Action<string> errorDataReceived)
+		{
 			try
 			{
-				var info = new ProcessStartInfo(exe, args);
-				info.RedirectStandardOutput = outputDataReceived != null;
-				info.RedirectStandardError = errorDataReceived != null;
-				info.UseShellExecute = false;
-				info.WorkingDirectory = workingDirectory;
-
-				var process = new Process();
-				process.StartInfo = info;
-
-				if (outputDataReceived != null)
+				return new _Process()
 				{
-					process.OutputDataReceived += (s, e) => outputDataReceived(e.Data);
-				}
-				if (errorDataReceived != null)
-				{
-					process.ErrorDataReceived += (s, e) => errorDataReceived(e.Data);
-				}
-
-				return new _Process(process);
+					Executable = exe,
+					Arguments = args,
+					WorkingDirectory = workingDirectory,
+					WaitForExit = waitForExit,
+					RedirectOutputAction = outputDataReceived,
+					RedirectErrorAction = errorDataReceived
+				};
 			}
 			catch (Exception exc)
 			{
-				throw new Exception(string.Format("Process failed: '{0}' '{1}'", exe, args), exc);
+				throw new Exception(string.Format("Failed to create process: '{0}' '{1}'", exe, args), exc);
 			}
 		}
 		#endregion
@@ -655,7 +699,11 @@ namespace System.Diagnostics
 		/// </returns>
 		public Process Run()
 		{
-			return this.DoRun(Default_WaitForExit, false, false);
+			return DoRun(
+				Process,
+				WaitForExit,
+				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
+				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -663,13 +711,18 @@ namespace System.Diagnostics
 		/// </summary>
 		/// <param name="waitForExit">
 		/// Indicates whether the method will wait for the process to exit before returning.
+		/// This value overrides the <see cref="WaitForExit"/> property.
 		/// </param>
 		/// <returns>
 		/// Returns the <see cref="Diagnostics.Process"/> object created to run the process.
 		/// </returns>
 		public Process Run(bool waitForExit)
 		{
-			return this.DoRun(waitForExit, false, false);
+			return DoRun(
+				Process,
+				waitForExit,
+				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
+				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -677,16 +730,22 @@ namespace System.Diagnostics
 		/// </summary>
 		/// <param name="waitForExit">
 		/// Indicates whether the method will wait for the process to exit before returning.
+		/// This value overrides the <see cref="WaitForExit"/> property.
 		/// </param>
 		/// <param name="redirectOutput">
 		/// Indicates whether to redirect stdout output.
+		/// If false, this value overrides the <see cref="RedirectOutputAction"/> property.
 		/// </param>
 		/// <returns>
 		/// Returns the <see cref="Diagnostics.Process"/> object created to run the process.
 		/// </returns>
 		public Process Run(bool waitForExit, bool redirectOutput)
 		{
-			return this.DoRun(waitForExit, redirectOutput, false);
+			return DoRun(
+				Process,
+				waitForExit,
+				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
+				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -694,25 +753,30 @@ namespace System.Diagnostics
 		/// </summary>
 		/// <param name="waitForExit">
 		/// Indicates whether the method will wait for the process to exit before returning.
+		/// This value overrides the <see cref="WaitForExit"/> property.
 		/// </param>
 		/// <param name="redirectOutput">
 		/// Indicates whether to redirect stdout output.
+		/// If false, this value overrides the <see cref="RedirectOutputAction"/> property.
 		/// </param>
 		/// <param name="redirectError">
 		/// Indicates whether to redirect stderr output.
+		/// If false, this value overrides the <see cref="RedirectErrorAction"/> property.
 		/// </param>
 		/// <returns>
 		/// Returns the <see cref="Diagnostics.Process"/> object created to run the process.
 		/// </returns>
 		public Process Run(bool waitForExit, bool redirectOutput, bool redirectError)
 		{
-			return this.DoRun(waitForExit, redirectOutput, redirectError);
+			return DoRun(
+				Process,
+				waitForExit,
+				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
+				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null && redirectError);
 		}
 
-		private Process DoRun(bool waitForExit, bool redirectOutput, bool redirectError)
+		private static Process DoRun(Process process, bool waitForExit, bool redirectOutput, bool redirectError)
 		{
-			Process process = this.Process;
-
 			try
 			{
 				process.Start();
@@ -763,6 +827,34 @@ namespace System.Diagnostics
 					return Directory.GetCurrentDirectory();
 				}
 			}
+		}
+
+		/// <summary>
+		/// Handles the <see cref="Process.OutputDataReceived"/> event.
+		/// </summary>
+		/// <param name="sender">
+		/// The source of the event.
+		/// </param>
+		/// <param name="e">
+		/// An instance of <see cref="DataReceivedEventArgs"/> containing the event data.
+		/// </param>
+		private void OutputDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			RedirectOutputAction?.Invoke(e.Data);
+		}
+
+		/// <summary>
+		/// Handles the <see cref="Process.ErrorDataReceived"/> event.
+		/// </summary>
+		/// <param name="sender">
+		/// The source of the event.
+		/// </param>
+		/// <param name="e">
+		/// An instance of <see cref="DataReceivedEventArgs"/> containing the event data.
+		/// </param>
+		private void ErrorDataReceived(object sender, DataReceivedEventArgs e)
+		{
+			RedirectErrorAction?.Invoke(e.Data);
 		}
 		#endregion
 	}
