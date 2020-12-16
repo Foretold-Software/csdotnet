@@ -2,6 +2,10 @@
 
 namespace System.Collections.Generic
 {
+	/// <summary>
+	/// A static class containing extension methods to simplify
+	/// operations on objects inheriting from <see cref="ICollection{T}"/>.
+	/// </summary>
 	public static class _ICollection
 	{
 		/// <summary>

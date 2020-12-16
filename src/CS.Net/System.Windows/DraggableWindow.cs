@@ -2,8 +2,15 @@
 
 namespace System.Windows
 {
+	/// <summary>
+	/// A base class for WPF window objects where a mouse press
+	/// anywhere within the window results in a window drag operation.
+	/// </summary>
 	public class DraggableWindow : Window
 	{
+		/// <summary>
+		/// Creates a new instance of <see cref="DraggableWindow"/>.
+		/// </summary>
 		public DraggableWindow()
 		{
 			this.MouseLeftButtonDown += (s, e) => { this.DragMove(); };

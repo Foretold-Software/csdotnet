@@ -1,12 +1,6 @@
 ﻿// Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace System.Windows
 {
@@ -21,52 +15,72 @@ namespace System.Windows
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <param name="action">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <param name="pccAction">
+		/// The action to perform as the "Property Changed Callback" method.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
-		public static PropertyChangedCallback CreatePCC<TDO>(Action<TDO> action) where TDO : DependencyObject
+		public static PropertyChangedCallback CreatePCC<TDO>(Action<TDO> pccAction) where TDO : DependencyObject
 		{
 			return new PropertyChangedCallback((d, e) =>
 			{
-				action(d as TDO);
+				pccAction(d as TDO);
 			});
 		}
 
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <typeparam name="TValue">The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.</typeparam>
-		/// <param name="action">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="pccAction">
+		/// The action to perform as the "Property Changed Callback" method.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
-		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Action<TDO, TValue> action) where TDO : DependencyObject
+		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Action<TDO, TValue> pccAction) where TDO : DependencyObject
 		{
 			return new PropertyChangedCallback((d, e) =>
 			{
-				action(d as TDO, (TValue)e.NewValue);
+				pccAction(d as TDO, (TValue)e.NewValue);
 			});
 		}
 
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <typeparam name="TValue">The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.</typeparam>
-		/// <param name="action">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="pccAction">
+		/// The action to perform as the "Property Changed Callback" method.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
-		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Action<TDO, TValue, TValue> action) where TDO : DependencyObject
+		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Action<TDO, TValue, TValue> pccAction) where TDO : DependencyObject
 		{
 			return new PropertyChangedCallback((d, e) =>
 			{
-				action(d as TDO, (TValue)e.OldValue, (TValue)e.NewValue);
+				pccAction(d as TDO, (TValue)e.OldValue, (TValue)e.NewValue);
 			});
 		}
 
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <param name="pccSelector">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
 		public static PropertyChangedCallback CreatePCC<TDO>(Func<TDO, Action> pccSelector) where TDO : DependencyObject
 		{
@@ -79,9 +93,15 @@ namespace System.Windows
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <typeparam name="TValue">The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.</typeparam>
-		/// <param name="pccSelector">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
 		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Func<TDO, Action<TValue>> pccSelector) where TDO : DependencyObject
 		{
@@ -94,9 +114,15 @@ namespace System.Windows
 		/// <summary>
 		/// Creates a <see cref="PropertyChangedCallback"/> delegate that redirects to the specified action.
 		/// </summary>
-		/// <typeparam name="TDO">The type of the class inheriting from <see cref="DependencyObject"/>.</typeparam>
-		/// <typeparam name="TValue">The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.</typeparam>
-		/// <param name="pccSelector">The action to perform as the redirection.</param>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
 		/// <returns>The generated <see cref="PropertyChangedCallback"/> delegate.</returns>
 		public static PropertyChangedCallback CreatePCC<TDO, TValue>(Func<TDO, Action<TValue, TValue>> pccSelector) where TDO : DependencyObject
 		{
@@ -113,15 +139,12 @@ namespace System.Windows
 		/// The type of the class inheriting from <see cref="DependencyObject"/>.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyChangedCallback"/> delegate.
 		/// </returns>
@@ -178,16 +201,13 @@ namespace System.Windows
 		/// Must inherit from <see cref="INotifyCollectionChanged"/>.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameter is the property's new value.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyChangedCallback"/> delegate.
 		/// </returns>
@@ -245,16 +265,13 @@ namespace System.Windows
 		/// Must inherit from <see cref="INotifyCollectionChanged"/>.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameters are the property's old and new values, in that order.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyChangedCallback"/> delegate.
 		/// </returns>
@@ -310,11 +327,8 @@ namespace System.Windows
 		/// The type of the class inheriting from <see cref="DependencyObject"/>.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -333,12 +347,9 @@ namespace System.Windows
 		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameter is the property's new value.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -357,12 +368,9 @@ namespace System.Windows
 		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
 		/// </typeparam>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameters are the property's old and new values, in that order.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -384,11 +392,8 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -410,12 +415,9 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameter is the property's new value.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -437,12 +439,9 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameters are the property's old and new values, in that order.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -466,15 +465,12 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -500,16 +496,13 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameter is the property's new value.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -535,16 +528,13 @@ namespace System.Windows
 		/// The default value of the dependency property, usually provided as a value of some specific type.
 		/// </param>
 		/// <param name="pccSelector">
-		/// The selector function that returns the callback method to use.
+		/// A selector function that returns the "Property Changed Callback" method to use.
 		/// This method's parameters are the property's old and new values, in that order.
 		/// </param>
 		/// <param name="nccehSelector">
-		/// The selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> to use.
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
 		/// Warning: DO NOT pass a selector that selects an anonymous method.
 		/// </param>
-		/// <remarks>
-		/// Note: The acronym PCC means "Property Changed Callback" and NCCEH means "Notify Collection Changed Event Handler".
-		/// </remarks>
 		/// <returns>
 		/// The generated <see cref="PropertyMetadata"/> instance.
 		/// </returns>
@@ -557,51 +547,235 @@ namespace System.Windows
 
 		#endregion
 
-		//TODO: Add documentation to the methods in this #region block
 		#region Methods - DependencyProperty Creation
-
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
 		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name)
 			where TDO : DependencyObject
 		{
 			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO));
 		}
 
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
 		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue)
 			where TDO : DependencyObject
 		{
 			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), new PropertyMetadata(defaultValue));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO>(selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO>(pccSelector));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action<TValue>> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action<TValue>> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(pccSelector));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action<TValue, TValue>> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, Func<TDO, Action<TValue, TValue>> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(pccSelector));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, pccSelector));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue>> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue>> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, pccSelector));
 		}
 
-		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue, TValue>> selector) where TDO : DependencyObject
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
+		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue, TValue>> pccSelector) where TDO : DependencyObject
 		{
-			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, selector));
+			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, pccSelector));
 		}
 
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// Must inherit from <see cref="INotifyCollectionChanged"/>.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// This method's parameters are the property's old and new values, in that order.
+		/// </param>
+		/// <param name="nccehSelector">
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
+		/// Warning: DO NOT pass a selector that selects an anonymous method.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
 		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action> pccSelector, Func<TDO, NotifyCollectionChangedEventHandler> nccehSelector)
 			where TDO : DependencyObject
 			where TValue : INotifyCollectionChanged
@@ -609,6 +783,34 @@ namespace System.Windows
 			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, pccSelector, nccehSelector));
 		}
 
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// Must inherit from <see cref="INotifyCollectionChanged"/>.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// This method's parameters are the property's old and new values, in that order.
+		/// </param>
+		/// <param name="nccehSelector">
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
+		/// Warning: DO NOT pass a selector that selects an anonymous method.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
 		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue>> pccSelector, Func<TDO, NotifyCollectionChangedEventHandler> nccehSelector)
 			where TDO : DependencyObject
 			where TValue : INotifyCollectionChanged
@@ -616,6 +818,34 @@ namespace System.Windows
 			return DependencyProperty.Register(name, typeof(TValue), typeof(TDO), NewPropertyMetadata<TDO, TValue>(defaultValue, pccSelector, nccehSelector));
 		}
 
+		/// <summary>
+		/// Registers a dependency property, using established known type values.
+		/// </summary>
+		/// <typeparam name="TDO">
+		/// The type of the class inheriting from <see cref="DependencyObject"/>.
+		/// </typeparam>
+		/// <typeparam name="TValue">
+		/// The type of the property with an associated <see cref="DependencyProperty"/> that implements this method.
+		/// Must inherit from <see cref="INotifyCollectionChanged"/>.
+		/// </typeparam>
+		/// <param name="name">
+		/// The name of the dependency property to register.
+		/// The name must be unique within the registration namespace of the owner type.
+		/// </param>
+		/// <param name="defaultValue">
+		/// The default value of the dependency property.
+		/// </param>
+		/// <param name="pccSelector">
+		/// A selector function that returns the "Property Changed Callback" method to use.
+		/// This method's parameters are the property's old and new values, in that order.
+		/// </param>
+		/// <param name="nccehSelector">
+		/// A selector function that returns the <see cref="NotifyCollectionChangedEventHandler"/> ("ncceh") method to use.
+		/// Warning: DO NOT pass a selector that selects an anonymous method.
+		/// </param>
+		/// <returns>
+		/// Returns a dependency property identifier created using established known type values.
+		/// </returns>
 		public static DependencyProperty DependencyPropertyRegister<TDO, TValue>(string name, TValue defaultValue, Func<TDO, Action<TValue, TValue>> pccSelector, Func<TDO, NotifyCollectionChangedEventHandler> nccehSelector)
 			where TDO : DependencyObject
 			where TValue : INotifyCollectionChanged

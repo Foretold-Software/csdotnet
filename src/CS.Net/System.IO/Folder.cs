@@ -4,9 +4,19 @@ using System.Linq;
 
 namespace System.IO
 {
+	/// <summary>
+	/// A class with helper methods to simplify folder operations.
+	/// </summary>
 	public class Folder
 	{
 		#region Constructor
+		/// <summary>
+		/// Creates a new instance of <see cref="Folder"/> and
+		/// ensures a folder at the specified path exists.
+		/// </summary>
+		/// <param name="path">
+		/// The path to the folder.
+		/// </param>
 		public Folder(string path)
 		{
 			this.FullName = Path.GetFullPath(path);
@@ -20,57 +30,219 @@ namespace System.IO
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// The fully qualified path to the folder.
+		/// </summary>
 		public string FullName
 		{ get; private set; }
+
+		/// <summary>
+		/// The name of the folder, not including its full path.
+		/// </summary>
 		public string Name
 		{ get { return Path.GetFileName(this.FullName); } }
 		#endregion
 
 		#region Methods - Copy
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(string destination)
 		{
 			return this.CopyContentsTo(new Folder(Path.Combine(destination, this.Name)), RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(string destination, bool recursive)
 		{
 			return this.CopyContentsTo(new Folder(Path.Combine(destination, this.Name)), recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(string destination, bool recursive, bool overwrite)
 		{
 			return this.CopyContentsTo(new Folder(Path.Combine(destination, this.Name)), recursive, overwrite);
 		}
+
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(Folder destination)
 		{
 			return this.CopyContentsTo(destination.GetSubfolder(this.Name), RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(Folder destination, bool recursive)
 		{
 			return this.CopyContentsTo(destination.GetSubfolder(this.Name), recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the copy of this folder within the destination.
+		/// </returns>
 		public Folder CopyTo(Folder destination, bool recursive, bool overwrite)
 		{
 			return this.CopyContentsTo(destination.GetSubfolder(this.Name), recursive, overwrite);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(string destination)
 		{
 			return this.CopyContentsTo(new Folder(destination), RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(string destination, bool recursive)
 		{
 			return this.CopyContentsTo(new Folder(destination), recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(string destination, bool recursive, bool overwrite)
 		{
 			return this.CopyContentsTo(new Folder(destination), recursive, overwrite);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(Folder destination)
 		{
 			return this.CopyContentsTo(destination, RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(Folder destination, bool recursive)
 		{
 			return this.CopyContentsTo(destination, recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Copies the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are copied.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to copy this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder CopyContentsTo(Folder destination, bool recursive, bool overwrite)
 		{
 			Folder subFolder;
@@ -104,6 +276,16 @@ namespace System.IO
 
 		#region Methods - Move
 		//TODO: Should I delete MoveTo altogether?
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(string destination)
 		{
@@ -112,6 +294,19 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(string destination, bool recursive)
 		{
@@ -120,6 +315,22 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(string destination, bool recursive, bool overwrite)
 		{
@@ -128,6 +339,16 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(Folder destination)
 		{
@@ -136,6 +357,19 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(Folder destination, bool recursive)
 		{
@@ -144,6 +378,22 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the entire folder, including the root folder itself, to the destination.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which this folder is moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the new folder within the destination to which this folder was moved.
+		/// </returns>
 		[Obsolete("If you use this method, then the folder that this object represents will be gone and an error might occur.", true)]
 		public Folder MoveTo(Folder destination, bool recursive, bool overwrite)
 		{
@@ -152,26 +402,104 @@ namespace System.IO
 			Directory.Delete(this.FullName, true);
 			return folder;
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(string destination)
 		{
 			return this.MoveContentsTo(new Folder(destination), RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(string destination, bool recursive)
 		{
 			return this.MoveContentsTo(new Folder(destination), recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(string destination, bool recursive, bool overwrite)
 		{
 			return this.MoveContentsTo(new Folder(destination), recursive, overwrite);
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(Folder destination)
 		{
 			return this.MoveContentsTo(destination, RecursiveByDefault, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(Folder destination, bool recursive)
 		{
 			return this.MoveContentsTo(destination, recursive, OverwriteByDefault);
 		}
+
+		/// <summary>
+		/// Moves the contents of the current folder to the destination, excluding the folder itself.
+		/// </summary>
+		/// <param name="destination">
+		/// The folder to which all the contents of this folder are moved.
+		/// </param>
+		/// <param name="recursive">
+		/// Indicates whether to move this folder's contents recursively.
+		/// </param>
+		/// <param name="overwrite">
+		/// Indicates whether to overwrite existing files of the same name in the destination folder.
+		/// </param>
+		/// <returns>
+		/// Returns an instance of <see cref="Folder"/> representing the destination.
+		/// </returns>
 		public Folder MoveContentsTo(Folder destination, bool recursive, bool overwrite)
 		{
 			Folder subFolder;
@@ -223,10 +551,26 @@ namespace System.IO
 		#endregion
 
 		#region Methods
+		/// <summary>
+		/// Gets the file contents of the current folder.
+		/// </summary>
+		/// <returns>
+		/// Returns an array of strings representing the fully qualified file paths of each of the files contained within the current folder.
+		/// </returns>
 		public string[] GetFiles()
 		{
 			return this.GetFiles(RecursiveByDefault);
 		}
+
+		/// <summary>
+		/// Gets the file contents of the current folder.
+		/// </summary>
+		/// <param name="recursive">
+		/// Indicates whether to search recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an array of strings representing the fully qualified file paths of each of the files contained within the current folder.
+		/// </returns>
 		public string[] GetFiles(bool recursive)
 		{
 			var searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
@@ -235,6 +579,23 @@ namespace System.IO
 
 			return files;
 		}
+
+		/// <summary>
+		/// Gets the file contents of the current folder.
+		/// </summary>
+		/// <param name="path">
+		/// The path to the directory to search.
+		/// </param>
+		/// <param name="searchPattern">
+		/// The search string to match against the names of files in path.
+		/// </param>
+		/// <param name="searchOption">
+		/// A value of type <see cref="SearchOption"/> indicating whether to search recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an array of strings representing the fully qualified file paths of each of the files contained within the current folder.
+		/// If an error occurs during the search, an empty array is returned.
+		/// </returns>
 		public static string[] GetFilesSafe(string path, string searchPattern = "*", SearchOption searchOption = SearchOption.TopDirectoryOnly)
 		{
 			try
@@ -247,15 +608,40 @@ namespace System.IO
 			}
 		}
 
+		/// <summary>
+		/// Get a subfolder of the current folder.
+		/// </summary>
+		/// <param name="name">
+		/// The name or relative path of the subfolder within the current folder.
+		/// </param>
+		/// <returns>
+		/// Returns a <see cref="Folder"/> objects representing the subfolder.
+		/// </returns>
 		public Folder GetSubfolder(string name)
 		{
 			return new Folder(Path.Combine(this.FullName, name));
 		}
 
+		/// <summary>
+		/// Gets a collection of folders contained within the current folder.
+		/// </summary>
+		/// <returns>
+		/// Returns an array of <see cref="Folder"/> objects representing the folders contained within the current folder.
+		/// </returns>
 		public Folder[] GetSubfolders()
 		{
 			return this.GetSubfolders(RecursiveByDefault);
 		}
+
+		/// <summary>
+		/// Gets a collection of folders contained within the current folder.
+		/// </summary>
+		/// <param name="recursive">
+		/// Indicates whether to search recursively.
+		/// </param>
+		/// <returns>
+		/// Returns an array of <see cref="Folder"/> objects representing the folders contained within the current folder.
+		/// </returns>
 		public Folder[] GetSubfolders(bool recursive)
 		{
 			var searchOption = recursive ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
@@ -274,7 +660,9 @@ namespace System.IO
 		/// and not an existing file, or creates the directory
 		/// if it does not exist.
 		/// </summary>
-		/// <param name="directory">The directory to create.</param>
+		/// <param name="directory">
+		/// The directory to create.
+		/// </param>
 		/// <exception cref="System.ArgumentException">
 		/// Thrown if directory is null, empty, or whitespace, or if
 		/// the specified directory already exists as a file, or if

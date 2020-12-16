@@ -9,9 +9,15 @@ using System.Text.RegularExpressions;
 
 namespace System.IO
 {
+	/// <summary>
+	/// A static class with helper methods to simplify file path operations.
+	/// </summary>
 	public static class _Path
 	{
 		#region Fields
+		/// <summary>
+		/// Gets the platform-specific character used to separate directory names in a file path.
+		/// </summary>
 		public static readonly string DirectorySeparatorString = Path.DirectorySeparatorChar.ToString();
 		#endregion
 

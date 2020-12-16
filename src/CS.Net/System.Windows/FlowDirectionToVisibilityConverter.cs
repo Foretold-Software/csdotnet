@@ -7,8 +7,34 @@ using System.Windows.Media;
 
 namespace System.Windows
 {
+	/// <summary>
+	/// A value converter class that examines the flow direction of a UI element and
+	/// compares that to the current UI thread culture to determine whether that UI
+	/// element should be hidden or visible.
+	/// For example: If a UI element has a LTR flow direction but the current UI thread
+	/// culture has a RTL flow direction, then the UI element should be hidden.
+	/// </summary>
 	public class FlowDirectionToVisibilityConverter : OneWayValueConverter, IValueConverter
 	{
+		/// <summary>
+		/// Converts a given UI element and its associated <see cref="FlowDirection"/> to
+		/// a <see cref="Visibility"/> enumeration value.
+		/// </summary>
+		/// <param name="value">
+		/// The UI element whose <see cref="FlowDirection"/> should be checked.
+		/// </param>
+		/// <param name="targetType">
+		/// This parameter is not used.
+		/// </param>
+		/// <param name="parameter">
+		/// The desired <see cref="FlowDirection"/> of the given UI element.
+		/// </param>
+		/// <param name="culture">
+		/// This parameter is not used.
+		/// </param>
+		/// <returns>
+		/// Return a <see cref="Visibility"/> enumeration value indicating whether the UI element should be visible or hidden.
+		/// </returns>
 		public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
 			try

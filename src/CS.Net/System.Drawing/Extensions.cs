@@ -8,6 +8,9 @@ using InteropImaging = System.Windows.Interop.Imaging;
 
 namespace System.Drawing
 {
+	/// <summary>
+	/// A static class containing extension methods for classes within the <see cref="System.Drawing"/> namespace.
+	/// </summary>
 	public static class Extensions
 	{
 		/// <summary>

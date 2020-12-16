@@ -4,6 +4,9 @@ using System.ComponentModel;
 
 namespace System.Windows
 {
+	/// <summary>
+	/// A static class containing extension methods for classes within the <see cref="System.Windows"/> namespace.
+	/// </summary>
 	public static class Extensions
 	{
 		#region Private Delegates

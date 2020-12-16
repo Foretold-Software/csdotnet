@@ -2,6 +2,9 @@
 
 namespace System.Windows.Threading
 {
+	/// <summary>
+	/// A static class containing extension methods for classes within the <see cref="System.Windows.Threading"/> namespace.
+	/// </summary>
 	public static class Extensions
 	{
 		/// <summary>
