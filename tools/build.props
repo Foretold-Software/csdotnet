@@ -5,7 +5,7 @@
 	<!-- Common build settings -->
 	<PropertyGroup>
 		<Deterministic>true</Deterministic>
-		<NoWarn>1591;$(NoWarn)</NoWarn>
+		<NoWarn>4011;1591;$(NoWarn)</NoWarn>
 	</PropertyGroup>
 
 	<!-- Common assembly attributes -->
