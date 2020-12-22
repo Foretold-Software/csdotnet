@@ -2,11 +2,43 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Microsoft.VisualStudio.TestTools.UnitTesting
 {
 	internal static class _Assert
 	{
+		/// <summary>
+		/// Fails a test based on whether the specified file exists.
+		/// </summary>
+		/// <param name="assert">
+		/// Throw-away parameter to enable Assert extension methods.
+		/// </param>
+		/// <param name="file">
+		/// The absolute or relative path to file to check.
+		/// </param>
+		/// <param name="fileExists">
+		/// If true, the test will be failed if the file does not exist.
+		/// If false, the test will be failed if the file does exist.
+		/// </param>
+		/// <param name="inconclusive">
+		/// Indicates whether to mark the test inconclusive instead of failing the test.
+		/// </param>
+		internal static void FileExists(this Assert assert, string file, bool fileExists = true, bool inconclusive = false)
+		{
+			if (File.Exists(file) != fileExists)
+			{
+				if (inconclusive)
+				{
+					Assert.Inconclusive("This test cannot produce conclusive results because the file exists: {0}", file);
+				}
+				else
+				{
+					Assert.Fail("This test fails because the file exists: {0}", file);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Fails the test if only one of the actions throws an exception,
 		/// or if both throw an exception but the exception type is not equal.
