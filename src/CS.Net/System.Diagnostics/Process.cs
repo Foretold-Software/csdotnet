@@ -7,13 +7,16 @@ namespace System.Diagnostics
 	/// <summary>
 	/// Helper class for running external processes.
 	/// </summary>
-	public class _Process
+	public class _Process : Disposable
 	{
 		#region Constructor
 		private _Process()
 		{
 			Process = new Process();
 			Process.StartInfo.UseShellExecute = false;
+
+			IsDisposed = false;
+			Process.Disposed += ProcessDisposed;
 		}
 		#endregion
 
@@ -23,6 +26,11 @@ namespace System.Diagnostics
 		private bool _WaitForExit = Default_WaitForExit;
 		private Action<string> _RedirectOutputAction = Default_RedirectOutputAction;
 		private Action<string> _RedirectErrorAction = Default_RedirectErrorAction;
+
+		//Multiple run / multiple thread safety
+		private volatile bool IsDisposing = false;
+		private bool RedirectOutputStreamStarted = false;
+		private bool RedirectErrorStreamStarted = false;
 
 		//Default behaviors
 		private const bool Default_WaitForExit = true;
@@ -113,6 +121,12 @@ namespace System.Diagnostics
 				}
 			}
 		}
+
+		/// <summary>
+		/// Indicates whether the underlying <see cref="Diagnostics.Process"/> object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{ get; private set; }
 		#endregion
 
 		#region Methods - Static Run
@@ -423,7 +437,7 @@ namespace System.Diagnostics
 
 		private static Process DoRun(string exe, string args, string workingDirectory, bool waitForExit, Action<string> outputDataReceived, Action<string> errorDataReceived)
 		{
-			return DoCreate(exe, args, workingDirectory, waitForExit, outputDataReceived, errorDataReceived)?.Run();
+			return DoCreate(exe, args, workingDirectory, waitForExit, outputDataReceived, errorDataReceived).Run();
 		}
 		#endregion
 
@@ -700,10 +714,10 @@ namespace System.Diagnostics
 		public Process Run()
 		{
 			return DoRun(
-				Process,
+				this,
 				WaitForExit,
-				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
-				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
+				!RedirectOutputStreamStarted && Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
+				!RedirectErrorStreamStarted && Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -719,10 +733,10 @@ namespace System.Diagnostics
 		public Process Run(bool waitForExit)
 		{
 			return DoRun(
-				Process,
+				this,
 				waitForExit,
-				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
-				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
+				!RedirectOutputStreamStarted && Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null,
+				!RedirectErrorStreamStarted && Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -742,10 +756,10 @@ namespace System.Diagnostics
 		public Process Run(bool waitForExit, bool redirectOutput)
 		{
 			return DoRun(
-				Process,
+				this,
 				waitForExit,
-				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
-				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
+				!RedirectOutputStreamStarted && Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
+				!RedirectErrorStreamStarted && Process.StartInfo.RedirectStandardError && RedirectErrorAction != null);
 		}
 
 		/// <summary>
@@ -769,37 +783,52 @@ namespace System.Diagnostics
 		public Process Run(bool waitForExit, bool redirectOutput, bool redirectError)
 		{
 			return DoRun(
-				Process,
+				this,
 				waitForExit,
-				Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
-				Process.StartInfo.RedirectStandardError && RedirectErrorAction != null && redirectError);
+				!RedirectOutputStreamStarted && Process.StartInfo.RedirectStandardOutput && RedirectOutputAction != null && redirectOutput,
+				!RedirectErrorStreamStarted && Process.StartInfo.RedirectStandardError && RedirectErrorAction != null && redirectError);
 		}
 
-		private static Process DoRun(Process process, bool waitForExit, bool redirectOutput, bool redirectError)
+		private static Process DoRun(_Process process, bool waitForExit, bool beginOutputRedirect, bool beginErrorRedirect)
 		{
-			try
+			lock (process)
 			{
-				process.Start();
-
-				if (redirectOutput)
+				try
 				{
-					process.BeginOutputReadLine();
-				}
-				if (redirectError)
-				{
-					process.BeginErrorReadLine();
-				}
+					process.Process.Start();
 
-				if (waitForExit)
-				{
-					process.WaitForExit();
-				}
+					if (beginOutputRedirect)
+					{
+						process.Process.BeginOutputReadLine();
+						process.RedirectOutputStreamStarted = true;
+					}
+					if (beginErrorRedirect)
+					{
+						process.Process.BeginErrorReadLine();
+						process.RedirectErrorStreamStarted = true;
+					}
 
-				return process;
-			}
-			catch (Exception exc)
-			{
-				throw new Exception(string.Format("Process failed: '{0}' '{1}'", process.StartInfo.FileName, process.StartInfo.Arguments), exc);
+					if (waitForExit)
+					{
+						process.Process.WaitForExit();
+					}
+
+					return process.Process;
+				}
+				catch (ObjectDisposedException exc)
+				{
+					throw new ObjectDisposedException(
+						string.Format("{1}{0}Executable: {2}{0}Args: {3}",
+							Environment.NewLine,
+							exc.Message,
+							process.Executable,
+							process.Arguments),
+						exc);
+				}
+				catch (Exception exc)
+				{
+					throw new Exception(string.Format("Process failed: '{0}' '{1}'", process.Executable, process.Arguments), exc);
+				}
 			}
 		}
 		#endregion
@@ -855,6 +884,56 @@ namespace System.Diagnostics
 		private void ErrorDataReceived(object sender, DataReceivedEventArgs e)
 		{
 			RedirectErrorAction?.Invoke(e.Data);
+		}
+
+		/// <summary>
+		/// Handles the process disposal event.
+		/// </summary>
+		/// <param name="sender">
+		/// The source of the event.
+		/// </param>
+		/// <param name="e">
+		/// An instance of <see cref="EventArgs"/> containing the event data.
+		/// </param>
+		private void ProcessDisposed(object sender, EventArgs e)
+		{
+			lock (this)
+			{
+				IsDisposing = true;
+				IsDisposed = true;
+			}
+		}
+		#endregion
+
+		#region Methods - Disposable Overrides
+		/// <summary>
+		/// Frees resources used by this class's underlying <see cref="Diagnostics.Process"/> object.
+		/// </summary>
+		protected override void FreeManagedResources()
+		{
+			lock (this)
+			{
+				if (!IsDisposing)
+				{
+					IsDisposing = true;
+
+					if (!IsDisposed)
+					{
+						if (Process.HasExited)
+						{
+							Process.Dispose();
+						}
+						else
+						{
+							new Threading.Thread(() =>
+							{
+								Process.WaitForExit();
+								Process.Dispose();
+							}).Start();
+						}
+					}
+				}
+			}
 		}
 		#endregion
 	}
