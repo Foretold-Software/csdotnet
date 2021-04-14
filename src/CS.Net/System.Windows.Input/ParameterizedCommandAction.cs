@@ -67,21 +67,11 @@ namespace System.Windows.Input
 		/// </param>
 		public void InvokeConditionally(object parameter)
 		{
-			if (Condition == null)
+			if (Action != null)
 			{
-				if (Action != null)
+				if (Condition == null || Condition(parameter))
 				{
 					Action(parameter);
-				}
-			}
-			else
-			{
-				if (Condition(parameter))
-				{
-					if (Action != null)
-					{
-						Action(parameter);
-					}
 				}
 			}
 		}
