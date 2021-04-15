@@ -2,6 +2,20 @@
 
 # Project History
 
+### 4/14/2021 - Release v1.2
+Add xml documentation all over the project.\
+Add support for .Net 5.0.\
+Add nightly builds to CI pipelines.\
+Simplified command invocation conditions.
+
+New types:
+* SimpleCommand
+* ParameterizedCommand
+
+Bug fixes:
+* Nightly CI pipelines facing build errors with unretrievable NuGet packages.
+* Unit tests failing for CultureInfo fallback culture retrieval on .Net 5.0 builds.
+
 ### 11/29/2020 - Release v1.1
 Projects updated to new SDK-style csproj files.\
 Add support for multi-targeting all currently supported and semi-supported versions of the .Net Framework.\
