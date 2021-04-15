@@ -24,7 +24,7 @@ variables:
   Project.Name: CS.Net
 
   # Versioning variables
-  Version.MajorMinor.NonReleaseDefault: '1.2'
+  Version.MajorMinor.NonReleaseDefault: '1.3'
 
   ${{ if startsWith(lower(variables['Build.SourceBranch']), 'refs/heads/release/') }}:
     Version.MajorMinor: $[variables['Build.SourceBranchName']]
