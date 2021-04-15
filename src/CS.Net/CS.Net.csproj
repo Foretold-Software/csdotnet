@@ -1,15 +1,20 @@
 ﻿<!-- Copyright (c) Foretold Software, LLC. All rights reserved. Licensed under the Microsoft Public License (MS-PL). See the license.md file in the project root directory for full license information. -->
 
-<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
+<Project Sdk="MSBuild.Sdk.Extras/3.0.23">
 
 	<PropertyGroup>
 		<TargetFrameworks>$(AllSupportedTFMs)</TargetFrameworks>
+		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 
-	<ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('net3')) OR $(TargetFramework.StartsWith('net4')) ">
 		<Reference Include="PresentationCore" />
 		<Reference Include="PresentationFramework" />
 		<Reference Include="WindowsBase" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework.StartsWith('net5')) ">
+		<PackageReference Include="System.Drawing.Common" Version="5.*" />
 	</ItemGroup>
 
 </Project>
