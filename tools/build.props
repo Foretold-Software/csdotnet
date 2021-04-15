@@ -16,8 +16,11 @@
 
 	<!-- Supported .Net Framework versions -->
 	<PropertyGroup>
-		<!-- Support extends through 5-10-2022 (and likely longer) -->
-		<AllSupportedTFMs>net48</AllSupportedTFMs>
+		<!-- Support extends through [3 months after .NET 6 release (projected 11-2021)] -->
+		<AllSupportedTFMs>net5.0-windows</AllSupportedTFMs>
+
+		<!-- Support extends through 5-9-2023 (and likely longer) -->
+		<AllSupportedTFMs>$(AllSupportedTFMs);net48</AllSupportedTFMs>
 
 		<!-- Support extends through 5-11-2021 -->
 		<AllSupportedTFMs>$(AllSupportedTFMs);net472</AllSupportedTFMs>
@@ -40,7 +43,8 @@
 
 
 		<!-- Supported versions for the unit testing project -->
-		<UnitTestTFMs>net48</UnitTestTFMs>
+		<UnitTestTFMs>net5.0-windows</UnitTestTFMs>
+		<UnitTestTFMs>$(UnitTestTFMs);net48</UnitTestTFMs>
 		<UnitTestTFMs>$(UnitTestTFMs);net472</UnitTestTFMs>
 		<UnitTestTFMs>$(UnitTestTFMs);net462</UnitTestTFMs>
 		<UnitTestTFMs>$(UnitTestTFMs);net46</UnitTestTFMs>
